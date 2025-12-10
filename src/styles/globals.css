@@ -1,0 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined");
+@import "tailwindcss";
+
+/* 기본 라이트 모드 */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+
+  /* LIGHT MODE COLORS */
+  --primary: #10b981;
+  --background-light: #f7fcf9;
+  --text-light-primary: #0d121c;
+  --text-light-secondary: #49659c;
+  --border-light: #e2f0e9;
+  --surface-light: #ffffff;
+}
+
+/* 다크 모드 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+
+    /* DARK MODE COLORS */
+    --background-dark: #101622;
+    --text-dark-primary: #f8f9fc;
+    --text-dark-secondary: #aeb9d0;
+    --border-dark: #313b4f;
+    --surface-dark: #1c2436;
+  }
+}
+
+/* Tailwind Theme 정의 */
+@theme inline {
+  /* BRAND */
+  --color-primary: var(--primary);
+
+  /* LIGHT */
+  --color-background-light: var(--background-light);
+  --color-text-light-primary: var(--text-light-primary);
+  --color-text-light-secondary: var(--text-light-secondary);
+  --color-border-light: var(--border-light);
+  --color-surface-light: var(--surface-light);
+
+  /* DARK */
+  --color-background-dark: var(--background-dark);
+  --color-text-dark-primary: var(--text-dark-primary);
+  --color-text-dark-secondary: var(--text-dark-secondary);
+  --color-border-dark: var(--border-dark);
+  --color-surface-dark: var(--surface-dark);
+
+  /* SYSTEM */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* FONT */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* 기본 Body 스타일 */
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
