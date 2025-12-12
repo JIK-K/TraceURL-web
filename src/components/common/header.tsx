@@ -25,12 +25,18 @@ const header = () => {
               </Link>
             </nav>
             <div className="flex items-center gap-2">
-              <button className="flex h-10 min-w-[84px] items-center justify-center rounded-lg bg-emerald-50 px-4 text-sm font-bold text-text-light-primary hover:bg-emerald-100 dark:bg-surface-dark dark:text-text-dark-primary dark:hover:bg-border-dark">
+              <Link
+                className="flex h-10 min-w-[84px] items-center justify-center rounded-lg bg-emerald-50 px-4 text-sm font-bold text-text-light-primary hover:bg-emerald-100 dark:bg-surface-dark dark:text-text-dark-primary dark:hover:bg-border-dark"
+                href={"/login"}
+              >
                 Log In
-              </button>
-              <button className="flex h-10 min-w-[84px] items-center justify-center rounded-lg bg-primary px-4 text-sm font-bold text-white hover:opacity-90">
+              </Link>
+              <Link
+                className="flex h-10 min-w-[84px] items-center justify-center rounded-lg bg-primary px-4 text-sm font-bold text-white hover:opacity-90"
+                href={"/login"}
+              >
                 Sign Up
-              </button>
+              </Link>
             </div>
           </div>
         </div>
