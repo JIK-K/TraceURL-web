@@ -25,7 +25,10 @@ export default function LoginPage() {
 
                 <div className="flex flex-1 gap-3 max-w-[480px] flex-col items-stretch">
                   {/* Google Login */}
-                  <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-white text-base font-bold leading-normal tracking-[0.015em] w-full transition-colors hover:bg-gray-100 dark:bg-white dark:text-black dark:hover:bg-gray-200 gap-3 border border-gray-200">
+                  <Link
+                    className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-white text-base font-bold leading-normal tracking-[0.015em] w-full transition-colors hover:bg-gray-100 dark:bg-white dark:text-black dark:hover:bg-gray-200 gap-3 border border-gray-200"
+                    href={`${process.env.NEXT_PUBLIC_SERVER_URL}/oauth2/authorization/google`}
+                  >
                     <Image
                       src={"/image/Google_Original.png"}
                       alt="google_icon"
@@ -35,7 +38,7 @@ export default function LoginPage() {
                     <span className="truncate text-black dark:text-black">
                       Continue with Google
                     </span>
-                  </button>
+                  </Link>
 
                   {/* GitHub Login */}
                   <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-black text-white text-base font-bold leading-normal tracking-[0.015em] w-full transition-colors hover:bg-gray-800 dark:bg-black dark:hover:bg-gray-800 gap-3">

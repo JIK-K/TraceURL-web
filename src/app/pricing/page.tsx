@@ -1,5 +1,5 @@
-import Footer from "@/components/common/footer";
-import Header from "@/components/common/header";
+import Footer from "@/common/components/common/footer";
+import Header from "@/common/components/common/header";
 
 export default function PricingPage() {
   return (
