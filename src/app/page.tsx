@@ -1,22 +1,8 @@
-"use client";
-import { getUserData } from "@/api/auth.api";
-import Footer from "@/common/components/common/footer";
-import Header from "@/common/components/common/header";
 import Link from "next/link";
-import { useEffect } from "react";
 
 export default function Home() {
-  useEffect(() => {
-    getUserData().then((response) => {
-      console.log("User Data:", response.data);
-    });
-  }, []);
-
   return (
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light dark:bg-background-dark font-display">
-      {/* Header */}
-      <Header />
-
       {/* Main */}
       <main className="flex-grow">
         {/* Hero */}
@@ -146,9 +132,6 @@ export default function Home() {
           </div>
         </section>
       </main>
-
-      {/* Footer */}
-      <Footer />
     </div>
   );
 }

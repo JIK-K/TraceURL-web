@@ -1,11 +1,6 @@
-import Footer from "@/common/components/common/footer";
-import Header from "@/common/components/common/header";
-
 export default function FeaturesPage() {
   return (
     <div className="bg-background-light dark:bg-background-dark font-display min-h-screen flex flex-col">
-      <Header />
-
       <main className="flex-grow">
         {/* Hero Section */}
         <section className="py-8 sm:py-10">
@@ -73,8 +68,6 @@ export default function FeaturesPage() {
           </div>
         </section>
       </main>
-
-      <Footer />
     </div>
   );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/styles/globals.css";
 import localFont from "next/font/local";
+import BaseLayout from "@/layout/baseLayout";
 
 const pretendard = localFont({
   src: "../fonts/PretendardVariable.woff2",
@@ -91,7 +92,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <BaseLayout>{children}</BaseLayout>
       </body>
     </html>
   );

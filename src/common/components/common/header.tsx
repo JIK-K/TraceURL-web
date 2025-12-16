@@ -1,7 +1,24 @@
+"use client";
+
+import { getUserData } from "@/api/auth.api";
+import { useUserStore } from "@/common/zustand/user.zustand";
+import { getCookie } from "@/utils/cookie/cookie";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
 
-const header = () => {
+const Header = () => {
+  const { user, setUser } = useUserStore();
+  const accessToken = getCookie("tra_atk");
+  useEffect(() => {
+    if (accessToken) {
+      getUserData().then((res) => {
+        setUser(res.data.data);
+        console.log("header data:", res.data.data);
+      });
+    }
+  }, []);
+
   return (
     <header className="sticky top-0 z-10 w-full bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm">
       <div className="container mx-auto px-4">
@@ -24,20 +41,36 @@ const header = () => {
                 Pricing
               </Link>
             </nav>
-            <div className="flex items-center gap-2">
+
+            {user ? (
               <Link
-                className="flex h-10 min-w-[84px] items-center justify-center rounded-lg bg-emerald-50 px-4 text-sm font-bold text-text-light-primary hover:bg-emerald-100 dark:bg-surface-dark dark:text-text-dark-primary dark:hover:bg-border-dark"
-                href={"/login"}
+                className="flex items-center gap-2 cursor-pointer"
+                href={"/profile"}
               >
-                Log In
+                <button className="flex min-w-[84px] gap-2 items-center justify-center rounded-lg bg-primary px-2 py-1 text-sm font-bold text-white hover:opacity-90">
+                  <span className="material-symbols-outlined flex items-center justify-center self-center">
+                    link
+                  </span>
+                  Create New Link
+                </button>
+                <Image src={"/default.png"} alt="icon" width={30} height={30} />
               </Link>
-              <Link
-                className="flex h-10 min-w-[84px] items-center justify-center rounded-lg bg-primary px-4 text-sm font-bold text-white hover:opacity-90"
-                href={"/login"}
-              >
-                Sign Up
-              </Link>
-            </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Link
+                  className="flex h-10 min-w-[84px] items-center justify-center rounded-lg bg-emerald-50 px-4 text-sm font-bold text-text-light-primary hover:bg-emerald-100 dark:bg-surface-dark dark:text-text-dark-primary dark:hover:bg-border-dark"
+                  href={"/login"}
+                >
+                  Log In
+                </Link>
+                <Link
+                  className="flex h-10 min-w-[84px] items-center justify-center rounded-lg bg-primary px-4 text-sm font-bold text-white hover:opacity-90"
+                  href={"/login"}
+                >
+                  Sign Up
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -45,4 +78,4 @@ const header = () => {
   );
 };
 
-export default header;
+export default Header;

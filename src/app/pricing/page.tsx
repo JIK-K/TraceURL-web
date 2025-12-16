@@ -1,12 +1,6 @@
-import Footer from "@/common/components/common/footer";
-import Header from "@/common/components/common/header";
-
 export default function PricingPage() {
   return (
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light dark:bg-background-dark font-display">
-      {/* HEADER */}
-      <Header />
-
       {/* MAIN */}
       <main className="flex-grow">
         {/* PRICING SECTION */}
@@ -210,9 +204,6 @@ export default function PricingPage() {
           </div>
         </section>
       </main>
-
-      {/* FOOTER */}
-      <Footer />
     </div>
   );
 }

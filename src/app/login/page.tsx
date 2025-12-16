@@ -41,7 +41,10 @@ export default function LoginPage() {
                   </Link>
 
                   {/* GitHub Login */}
-                  <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-black text-white text-base font-bold leading-normal tracking-[0.015em] w-full transition-colors hover:bg-gray-800 dark:bg-black dark:hover:bg-gray-800 gap-3">
+                  <Link
+                    className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-black text-white text-base font-bold leading-normal tracking-[0.015em] w-full transition-colors hover:bg-gray-800 dark:bg-black dark:hover:bg-gray-800 gap-3"
+                    href={`${process.env.NEXT_PUBLIC_SERVER_URL}/oauth2/authorization/github`}
+                  >
                     <Image
                       src={"/image/Github_Original.png"}
                       alt="github_icon"
@@ -49,7 +52,7 @@ export default function LoginPage() {
                       height={20}
                     />
                     <span className="truncate">Continue with GitHub</span>
-                  </button>
+                  </Link>
                 </div>
               </div>
 

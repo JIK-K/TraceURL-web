@@ -8,13 +8,13 @@ const Footer = () => {
           {/* 약관 링크 */}
           <div className="flex gap-4">
             <Link
-              href="#"
+              href="/policies/agreement"
               className="text-xs text-text-light-secondary hover:text-primary dark:text-text-dark-secondary dark:hover:text-primary transition-colors"
             >
               이용약관
             </Link>
             <Link
-              href="#"
+              href="/policies/privacy"
               className="text-xs text-text-light-secondary hover:text-primary dark:text-text-dark-secondary dark:hover:text-primary transition-colors"
             >
               개인정보처리방침
