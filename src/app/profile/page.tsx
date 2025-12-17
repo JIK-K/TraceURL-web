@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { getUserData } from "@/api/auth.api";
 import Image from "next/image";
 import { removeCookie } from "@/utils/cookie/cookie";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/common/zustand/user.zustand";
+import LinksSection from "./components/linkSection";
+import ProfileSection from "./components/profileSection";
+import SettingsSection from "./components/settingSection";
 
 type MenuKey = "profile" | "links" | "settings" | "logout";
 
@@ -25,7 +26,7 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen bg-[#f5f6f8] dark:bg-[#101622] font-display text-gray-900 dark:text-gray-100 transition-colors">
-      <main className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="flex flex-col md:flex-row gap-8 lg:gap-12">
           {/* Sidebar */}
           <aside className="w-full md:w-64 shrink-0">
@@ -85,54 +86,11 @@ export default function ProfilePage() {
 
           {/* Content */}
           <section className="flex-1">
-            {/* ========= Profile Section ========= */}
-            {activeMenu === "profile" && (
-              <>
-                <h1 className="text-4xl font-black mb-6">Profile</h1>
+            {activeMenu === "profile" && <ProfileSection />}
 
-                <div className="grid grid-cols-1 gap-6">
-                  <div className="flex flex-col gap-2">
-                    <label className="text-sm font-medium">Username</label>
-                    <input
-                      className="h-10 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-3"
-                      defaultValue={user?.displayName}
-                    />
-                  </div>
+            {activeMenu === "links" && <LinksSection />}
 
-                  <div className="flex flex-col gap-2">
-                    <label className="text-sm font-medium">Email</label>
-                    <input
-                      className="h-10 rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 px-3 text-gray-400"
-                      disabled
-                      defaultValue={user?.email}
-                    />
-                  </div>
-                </div>
-
-                <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700/60 flex justify-end gap-3">
-                  <button className="h-10 px-4 rounded-lg bg-gray-100 dark:bg-gray-800 text-sm font-bold">
-                    Cancel
-                  </button>
-                  <button className="h-10 px-4 rounded-lg bg-[#16a34a] text-white text-sm font-bold">
-                    Save Changes
-                  </button>
-                </div>
-              </>
-            )}
-
-            {/* ========= Links Section ========= */}
-            {/*
-            {activeMenu === "links" && (
-              <LinksSection />
-            )}
-            */}
-
-            {/* ========= Settings Section ========= */}
-            {/*
-            {activeMenu === "settings" && (
-              <SettingsSection />
-            )}
-            */}
+            {activeMenu === "settings" && <SettingsSection />}
           </section>
         </div>
       </main>

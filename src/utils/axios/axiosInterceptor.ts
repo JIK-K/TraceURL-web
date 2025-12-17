@@ -57,6 +57,8 @@ export const onErrorResponse = async (error: AxiosError) => {
   ) {
     originalRequest._retry = true;
 
+    console.log("❗ 401 Unauthorized 에러 감지");
+
     const refreshToken = getCookie("tra_rtk");
     if (!refreshToken) {
       removeCookie("tra_atk");
@@ -75,7 +77,7 @@ export const onErrorResponse = async (error: AxiosError) => {
         console.log("🔁 토큰 재발급 시도 중...");
 
         const refreshTokenResponse = await axiosInstance.post(
-          `${process.env.NEXT_PUBLIC_SERVER_HOST}/auth/refresh`,
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/refresh`,
           {},
           { withCredentials: true } // 쿠키 전달
         );

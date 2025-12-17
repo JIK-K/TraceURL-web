@@ -1,6 +1,6 @@
 "use client";
 
-import { getUserData } from "@/api/auth.api";
+import { getUserData } from "@/api/user.api";
 import { useUserStore } from "@/common/zustand/user.zustand";
 import { getCookie } from "@/utils/cookie/cookie";
 import Image from "next/image";
@@ -47,12 +47,6 @@ const Header = () => {
                 className="flex items-center gap-2 cursor-pointer"
                 href={"/profile"}
               >
-                <button className="flex min-w-[84px] gap-2 items-center justify-center rounded-lg bg-primary px-2 py-1 text-sm font-bold text-white hover:opacity-90">
-                  <span className="material-symbols-outlined flex items-center justify-center self-center">
-                    link
-                  </span>
-                  Create New Link
-                </button>
                 <Image src={"/default.png"} alt="icon" width={30} height={30} />
               </Link>
             ) : (
