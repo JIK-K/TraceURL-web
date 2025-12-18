@@ -9,8 +9,7 @@ type Props = {
 };
 export default function BaseLayout({ children }: Props) {
   const pathname = usePathname();
-  const hideDefaultLayoutPaths =
-    pathname.startsWith("/login") || pathname.startsWith("/desktop");
+  const hideDefaultLayoutPaths = pathname.startsWith("/login");
 
   return (
     <>

@@ -36,7 +36,7 @@ export default function Pagination({
   };
 
   return (
-    <div className="mt-6 flex items-center justify-center">
+    <div className="flex items-center justify-center">
       <nav className="flex items-center gap-1">
         {/* 이전 버튼 */}
         <button
