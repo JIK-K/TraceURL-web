@@ -1,63 +1,46 @@
 'use client";';
 
+import { getShortUrlList } from "@/api/shortUrl.api";
 import Pagination from "@/common/components/ui/pagination";
+import { ShortUrlResponseDto } from "@/common/dtos/shortUrl.dto";
+import { BaseStatus } from "@/common/enums/userStatus.enum";
+import { formatKoreanDatetime } from "@/utils/string/string.util";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-
-const links = [
-  {
-    short: "bit.ly/xyz123",
-    original: "https://www.very-long-original-url-that-is-truncated.com",
-    clicks: 1234,
-    status: "Active",
-    created: "2023-10-26",
-  },
-  {
-    short: "bit.ly/abc456",
-    original: "https://www.another-long-url-for-a-different-product.com",
-    clicks: 5678,
-    status: "Active",
-    created: "2023-10-25",
-  },
-  {
-    short: "bit.ly/def789",
-    original: "https://www.inactive-link-example-for-demonstration.com",
-    clicks: 987,
-    status: "Inactive",
-    created: "2023-10-24",
-  },
-  {
-    short: "bit.ly/ghi012",
-    original: "https://www.yet-another-example-of-a-destination-url.com",
-    clicks: 2468,
-    status: "Active",
-    created: "2023-10-23",
-  },
-];
+import React, { useEffect, useState } from "react";
 
 export default function LinksSection() {
   const router = useRouter();
   const [statusFilter, setStatusFilter] = useState<PageStatus>("All");
-  const [sortOrder, setSortOrder] = useState<SortOrder>("desc"); // 기본 내림차순
+  const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
+  const [links, setLinks] = useState<ShortUrlResponseDto[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 1;
+  const itemsPerPage = 10;
 
-  const filteredLinks = links.filter((link) =>
-    statusFilter === "All" ? true : link.status === statusFilter
-  );
+  useEffect(() => {
+    const statusParam =
+      statusFilter === "All"
+        ? undefined
+        : statusFilter === "Active"
+        ? BaseStatus.ACTIVE
+        : BaseStatus.INACTIVE;
+
+    getShortUrlList(
+      currentPage,
+      itemsPerPage,
+      `createdAt,${sortOrder}`,
+      statusParam
+    )
+      .then((response) => {
+        console.log(response.data.data);
+        setLinks(response.data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching short URL list:", error);
+      });
+  }, [currentPage, sortOrder, statusFilter]);
 
   // 페이지네이션 적용
-  const totalPages = Math.ceil(filteredLinks.length / itemsPerPage);
-  const paginatedLinks = filteredLinks.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
-  const sortedLinks = [...filteredLinks].sort((a, b) => {
-    const dateA = new Date(a.created).getTime();
-    const dateB = new Date(b.created).getTime();
-    return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
-  });
+  const totalPages = Math.ceil(links.length / itemsPerPage);
 
   return (
     <div className="relative flex h-auto min-h-screen w-full flex-col font-display border border-border-light rounded-xl bg-background-light text-[#1F2937] dark:bg-background-dark dark:text-gray-300">
@@ -140,13 +123,13 @@ export default function LinksSection() {
                   <thead className="bg-gray-50 dark:bg-gray-800/50">
                     <tr>
                       <th className="px-6 py-4 text-left font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                        Title
+                      </th>
+                      <th className="px-6 py-4 text-left font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Short Link
                       </th>
                       <th className="px-6 py-4 text-left font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Original URL
-                      </th>
-                      <th className="px-6 py-4 text-left font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                        Clicks
                       </th>
                       <th className="px-6 py-4 text-left font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Status
@@ -162,31 +145,31 @@ export default function LinksSection() {
                   <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
                     {links.map((link, i) => (
                       <tr key={i}>
+                        <td className="px-6 py-4 max-w-xs truncate text-gray-500 dark:text-gray-400">
+                          {link.title}
+                        </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center gap-2">
                             <a
                               className="font-medium text-primary hover:underline"
                               href="#"
                             >
-                              {link.short}
+                              {link.shortUrl}
                             </a>
                             <button className="text-gray-400 hover:text-primary">
-                              <span className="material-symbols-outlined text-base">
+                              <span className="p-2 material-symbols-outlined text-base cursor-pointer">
                                 content_copy
                               </span>
                             </button>
                           </div>
                         </td>
                         <td className="px-6 py-4 max-w-xs truncate text-gray-500 dark:text-gray-400">
-                          {link.original}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-gray-500 dark:text-gray-400">
-                          {link.clicks.toLocaleString()}
+                          {link.originalUrl}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span
                             className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                              link.status === "Active"
+                              link.status === BaseStatus.ACTIVE
                                 ? "bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300"
                                 : "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300"
                             }`}
@@ -195,37 +178,18 @@ export default function LinksSection() {
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-gray-500 dark:text-gray-400">
-                          {link.created}
+                          {formatKoreanDatetime(link.createdAt?.toString())}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right">
                           <div className="flex items-center justify-end gap-2">
-                            <button className="p-2 text-gray-500 hover:text-primary rounded-full hover:bg-primary/10">
-                              <span className="material-symbols-outlined text-xl">
+                            <button className="text-gray-500 hover:text-primary rounded-full hover:bg-primary/10">
+                              <span className="p-2 material-symbols-outlined text-xl">
                                 edit
                               </span>
                             </button>
-                            <button className="p-2 text-gray-500 hover:text-primary rounded-full hover:bg-primary/10">
-                              <span className="material-symbols-outlined text-xl">
+                            <button className=" text-gray-500 hover:text-primary rounded-full hover:bg-primary/10">
+                              <span className="p-2 material-symbols-outlined text-xl">
                                 bar_chart
-                              </span>
-                            </button>
-                            <button
-                              className={`p-2 rounded-full hover:bg-${
-                                link.status === "Active" ? "red" : "green"
-                              }-500/10 text-gray-500 hover:text-${
-                                link.status === "Active" ? "red" : "green"
-                              }-500`}
-                            >
-                              <span
-                                className={`material-symbols-outlined text-xl ${
-                                  link.status === "Active"
-                                    ? ""
-                                    : "-scale-x-100 text-gray-400 dark:text-gray-600"
-                                }`}
-                              >
-                                {link.status === "Active"
-                                  ? "toggle_on"
-                                  : "toggle_off"}
                               </span>
                             </button>
                           </div>

@@ -1,6 +1,6 @@
 // src/common/dto/UserResponseDto.ts
 
-import { UserStatus } from "../enums/userStatus.enum";
+import { BaseStatus } from "../enums/userStatus.enum";
 import { BaseDto } from "./base.dto";
 
 export interface UserDto extends BaseDto {
@@ -8,6 +8,6 @@ export interface UserDto extends BaseDto {
   email: string;
   displayName: string;
   type: string;
-  status: UserStatus;
+  status: BaseStatus;
   lastLoginAt?: string; // ISO 문자열
 }

@@ -3,27 +3,36 @@
 import React, { useState } from "react";
 import Accordion from "./components/Accordion";
 import { useRouter } from "next/navigation";
+import { create } from "domain";
+import { createShortUrl } from "@/api/shortUrl.api";
 
 export default function CreateLinkPage() {
   const router = useRouter();
-  const [destinationUrl, setDestinationUrl] = useState("");
+  const [originalUrl, setOriginalUrl] = useState("");
   const [title, setTitle] = useState("");
   const [domain, setDomain] = useState("traceurl.p-e.kr");
   const [alias, setAlias] = useState("");
   const [expireDate, setExpireDate] = useState("");
+  const [isCustom, setIsCustom] = useState(true);
 
   /* ===== Submit ===== */
   const handleCreate = () => {
     const payload = {
-      destinationUrl,
+      originalUrl,
       title,
       domain,
       alias,
+      isCustom,
       expireDate,
     };
 
     console.log("CREATE LINK PAYLOAD", payload);
-    // TODO: API 연동
+
+    createShortUrl(payload).then((response) => {
+      if (response.data.data) {
+        router.push("/profile");
+      }
+    });
   };
 
   return (
@@ -61,8 +70,8 @@ export default function CreateLinkPage() {
               <div className="flex rounded-lg border border-border-light overflow-hidden focus-within:ring-2 focus-within:ring-primary">
                 <input
                   type="url"
-                  value={destinationUrl}
-                  onChange={(e) => setDestinationUrl(e.target.value)}
+                  value={originalUrl}
+                  onChange={(e) => setOriginalUrl(e.target.value)}
                   placeholder="https://example.com/very-long-url"
                   className="flex-1 h-14 px-4 bg-background-light outline-none text-base"
                 />
@@ -70,7 +79,7 @@ export default function CreateLinkPage() {
                   type="button"
                   className="px-4 bg-background-light text-text-light-secondary hover:text-primary"
                   onClick={() =>
-                    navigator.clipboard.readText().then(setDestinationUrl)
+                    navigator.clipboard.readText().then(setOriginalUrl)
                   }
                 >
                   <span className="material-symbols-outlined">
@@ -108,13 +117,39 @@ export default function CreateLinkPage() {
                   <option>traceurl.p-e.kr</option>
                   <option>localhost:8080</option>
                 </select>
-
+                <div className="flex items-center space-x-4">
+                  <label className="flex items-center space-x-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="customToggle"
+                      checked={isCustom}
+                      onChange={() => setIsCustom(true)}
+                      className="accent-primary"
+                    />
+                    <span>Custom</span>
+                  </label>
+                  <label className="flex items-center space-x-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="customToggle"
+                      checked={!isCustom}
+                      onChange={() => setIsCustom(false)}
+                      className="accent-primary"
+                    />
+                    <span>Non-Custom</span>
+                  </label>
+                </div>
                 <input
                   type="text"
                   value={alias}
                   onChange={(e) => setAlias(e.target.value)}
-                  placeholder="super-grenade"
-                  className="flex-1 h-12 rounded-lg border border-border-light px-4 bg-background-light"
+                  placeholder={
+                    isCustom ? "super-grenade" : "Disabled in Non-Custom mode"
+                  }
+                  disabled={!isCustom}
+                  className={`flex-1 h-12 rounded-lg border border-border-light px-4 bg-background-light ${
+                    !isCustom ? "cursor-not-allowed opacity-50" : ""
+                  }`}
                 />
               </div>
             </Accordion>
@@ -122,7 +157,7 @@ export default function CreateLinkPage() {
             {/* EXPIRATION */}
             <Accordion icon="timer" title="Link Expiration">
               <input
-                type="date"
+                type="datetime-local"
                 value={expireDate}
                 onChange={(e) => setExpireDate(e.target.value)}
                 className="h-12 rounded-lg border border-border-light px-4 bg-background-light"
