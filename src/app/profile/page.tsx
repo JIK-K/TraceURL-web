@@ -1,99 +1,59 @@
 "use client";
-
-import { useState } from "react";
-import Image from "next/image";
-import { removeCookie } from "@/utils/cookie/cookie";
-import { useRouter } from "next/navigation";
+import { updateUserName } from "@/api/user.api";
 import { useUserStore } from "@/common/zustand/user.zustand";
-import LinksSection from "./components/linkSection";
-import ProfileSection from "./components/profileSection";
-import SettingsSection from "./components/settingSection";
+import { useState } from "react";
 
-type MenuKey = "profile" | "links" | "settings" | "logout";
-
-export default function ProfilePage() {
+export default function ProfileSection() {
   const { user, setUser } = useUserStore();
-  const [activeMenu, setActiveMenu] = useState<MenuKey>("profile");
-  const router = useRouter();
+  const [displayName, setDisplayName] = useState(user?.displayName || "");
 
-  const menuClass = (key: MenuKey) =>
-    `flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer
-     ${
-       activeMenu === key
-         ? "bg-green-100 dark:bg-green-500/20 text-[#16a34a]"
-         : "hover:bg-gray-100 dark:hover:bg-gray-800/50"
-     }`;
-
+  const handleSaveChanges = () => {
+    updateUserName(displayName).then((res) => {
+      setUser(res.data.data);
+      console.log("User name updated:", res);
+    });
+  };
   return (
-    <div className="min-h-screen bg-[#f5f6f8] dark:bg-[#101622] font-display text-gray-900 dark:text-gray-100 transition-colors">
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-        <div className="flex flex-col md:flex-row gap-8 lg:gap-12">
-          {/* Sidebar */}
-          <aside className="w-full md:w-64 shrink-0">
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-3">
-                <Image src="/default.png" alt="icon" width={50} height={50} />
-                <div>
-                  <p className="font-medium">{user?.displayName}</p>
-                  <p className="text-sm text-gray-500">{user?.email}</p>
-                </div>
-              </div>
+    <div className="overflow-hidden rounded-xl border border-border-light bg-background-light dark:bg-gray-900/50 p-6">
+      <h1 className="text-4xl font-black mb-6 text-gray-900 dark:text-white">
+        Profile
+      </h1>
 
-              <nav className="flex flex-col gap-1 mt-4">
-                <div
-                  onClick={() => setActiveMenu("profile")}
-                  className={menuClass("profile")}
-                >
-                  <span className="material-symbols-outlined">person</span>
-                  <span className="text-sm font-medium">Profile</span>
-                </div>
-
-                <div
-                  onClick={() => setActiveMenu("links")}
-                  className={menuClass("links")}
-                >
-                  <span className="material-symbols-outlined">link</span>
-                  <span className="text-sm font-medium">Your Links</span>
-                </div>
-
-                <div
-                  onClick={() => setActiveMenu("settings")}
-                  className={menuClass("settings")}
-                >
-                  <span className="material-symbols-outlined">settings</span>
-                  <span className="text-sm font-medium">Settings</span>
-                </div>
-                <button
-                  onClick={() => {
-                    removeCookie("tra_atk");
-                    removeCookie("tra_rtk");
-                    useUserStore.persist?.clearStorage?.();
-                    useUserStore.setState({ user: null });
-                    router.replace("/login");
-                  }}
-                  className={menuClass("logout")}
-                >
-                  <span className="material-symbols-outlined text-red-500">
-                    logout
-                  </span>
-                  <span className="text-sm font-medium text-red-500">
-                    Logout
-                  </span>
-                </button>
-              </nav>
-            </div>
-          </aside>
-
-          {/* Content */}
-          <section className="flex-1">
-            {activeMenu === "profile" && <ProfileSection />}
-
-            {activeMenu === "links" && <LinksSection />}
-
-            {activeMenu === "settings" && <SettingsSection />}
-          </section>
+      <div className="grid grid-cols-1 gap-6">
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            Username
+          </label>
+          <input
+            className="h-10 rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-3 focus:border-primary focus:ring-1 focus:ring-primary text-gray-900 dark:text-white"
+            defaultValue={user?.displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
+          />
         </div>
-      </main>
+
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            Email
+          </label>
+          <input
+            className="h-10 rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-3 text-gray-400"
+            disabled
+            defaultValue={user?.email}
+          />
+        </div>
+      </div>
+
+      <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700/60 flex justify-end gap-3">
+        <button className="h-10 px-4 rounded-lg bg-gray-100 dark:bg-gray-800 text-sm font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+          Cancel
+        </button>
+        <button
+          className="h-10 px-4 rounded-lg bg-primary text-white text-sm font-bold hover:bg-green-600 transition-colors"
+          onClick={handleSaveChanges}
+        >
+          Save Changes
+        </button>
+      </div>
     </div>
   );
 }

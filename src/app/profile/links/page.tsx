@@ -1,4 +1,4 @@
-'use client";';
+"use client";
 
 import { getShortUrlList } from "@/api/shortUrl.api";
 import Pagination from "@/common/components/ui/pagination";
@@ -6,7 +6,7 @@ import { ShortUrlResponseDto } from "@/common/dtos/shortUrl.dto";
 import { BaseStatus } from "@/common/enums/userStatus.enum";
 import { formatKoreanDatetime } from "@/utils/string/string.util";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function LinksSection() {
   const router = useRouter();
@@ -118,7 +118,7 @@ export default function LinksSection() {
           {/* Table */}
           <div className="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50">
             <div className="overflow-x-auto">
-              <table className="text-sm">
+              <table className="w-full text-sm">
                 <thead className="bg-gray-50 dark:bg-gray-800/50">
                   <tr>
                     <th className="px-3 py-2 text-left font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
@@ -153,11 +153,21 @@ export default function LinksSection() {
                         <div className="flex items-center gap-2">
                           <a
                             className="font-medium text-primary hover:underline"
-                            href="#"
+                            href={`${process.env.NEXT_PUBLIC_SERVER_URL}/${link.shortCode}`}
                           >
-                            {link.shortUrl}
+                            {process.env.NEXT_PUBLIC_SERVER_URL}/
+                            {link.shortCode}
                           </a>
-                          <button className="text-gray-400 hover:text-primary">
+                          <button
+                            className="text-gray-400 hover:text-primary"
+                            onClick={() => {
+                              const fullUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}/${link.shortCode}`;
+                              navigator.clipboard
+                                .writeText(fullUrl)
+                                .then(() => alert("Copied!"))
+                                .catch(() => alert("Failed to copy"));
+                            }}
+                          >
                             <span className="p-2 material-symbols-outlined text-base cursor-pointer">
                               content_copy
                             </span>
@@ -183,12 +193,20 @@ export default function LinksSection() {
                       </td>
                       <td className="px-3 py-2 whitespace-nowrap text-right">
                         <div className="flex items-center justify-end gap-2">
-                          <button className="text-gray-500 hover:text-primary rounded-full hover:bg-primary/10">
+                          <button
+                            className="text-gray-500 hover:text-primary rounded-full hover:bg-primary/10"
+                            onClick={() => router.push(`/link/${link.id}/edit`)}
+                          >
                             <span className="p-2 material-symbols-outlined text-xl">
                               edit
                             </span>
                           </button>
-                          <button className="text-gray-500 hover:text-primary rounded-full hover:bg-primary/10">
+                          <button
+                            className="text-gray-500 hover:text-primary rounded-full hover:bg-primary/10"
+                            onClick={() =>
+                              router.push(`/link/${link.id}/dashboard`)
+                            }
+                          >
                             <span className="p-2 material-symbols-outlined text-xl">
                               bar_chart
                             </span>

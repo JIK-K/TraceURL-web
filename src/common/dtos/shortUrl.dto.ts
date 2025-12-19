@@ -13,7 +13,7 @@ export interface ShortUrlCreateRequestDto extends BaseDto {
 // Response DTO for short URL information
 export interface ShortUrlResponseDto extends BaseDto {
   id: string;
-  shortUrl: string;
+  shortCode: string;
   originalUrl: string;
   title: string;
   isCustom: boolean;

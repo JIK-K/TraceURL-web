@@ -58,11 +58,17 @@ export default function LoginPage() {
 
               <p className="text-slate-600 dark:text-gray-500 text-sm font-normal leading-normal pt-8 px-2 text-center">
                 계속 진행하면{" "}
-                <a className="underline hover:text-primary" href="#">
+                <a
+                  className="underline hover:text-primary"
+                  href="/policies/agreement"
+                >
                   서비스 이용약관
                 </a>{" "}
                 및{" "}
-                <a className="underline hover:text-primary" href="#">
+                <a
+                  className="underline hover:text-primary"
+                  href="/policies/privacy"
+                >
                   개인정보처리방침
                 </a>
                 에 동의하게 됩니다.

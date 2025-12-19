@@ -1,7 +1,5 @@
 "use client";
 
-import React from "react";
-
 export default function SettingsSection() {
   return (
     <div className="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-x-hidden">
