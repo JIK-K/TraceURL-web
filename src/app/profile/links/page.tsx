@@ -66,11 +66,8 @@ export default function LinksSection() {
             <div className="flex flex-col md:flex-row md:justify-end md:items-center gap-3">
               {/* Search */}
               <div className="w-full max-w-xs">
-                <span className="material-symbols-outlined pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                  search
-                </span>
                 <input
-                  className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 py-2 pl-10 pr-4 focus:border-primary focus:ring-primary"
+                  className="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 py-2  p-4 focus:border-primary focus:ring-primary"
                   placeholder="Search links..."
                   type="text"
                 />
