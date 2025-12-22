@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import Accordion from "./components/Accordion";
 import { useRouter } from "next/navigation";
-import { create } from "domain";
 import { createShortUrl } from "@/api/shortUrl.api";
+import { toDateTimeLocalString } from "@/utils/string/string.util";
 
 export default function CreateLinkPage() {
   const router = useRouter();
@@ -28,11 +28,18 @@ export default function CreateLinkPage() {
 
     console.log("CREATE LINK PAYLOAD", payload);
 
-    createShortUrl(payload).then((response) => {
-      if (response.data.data) {
-        router.push("/profile");
-      }
-    });
+    createShortUrl(payload)
+      .then((response) => {
+        if (response.data.data) {
+          router.push("/profile/links");
+        }
+      })
+      .catch((error) => {
+        const code = error.response?.data?.code;
+        if (code === "COMMON-005") {
+          alert("duplicated alias exists");
+        }
+      });
   };
 
   return (
@@ -158,8 +165,11 @@ export default function CreateLinkPage() {
             <Accordion icon="timer" title="Link Expiration">
               <input
                 type="datetime-local"
-                value={expireDate}
-                onChange={(e) => setExpireDate(e.target.value)}
+                value={toDateTimeLocalString(expireDate)}
+                min={toDateTimeLocalString(new Date().toISOString())}
+                onChange={(e) =>
+                  setExpireDate(new Date(e.target.value).toISOString())
+                }
                 className="h-12 rounded-lg border border-border-light px-4 bg-background-light"
               />
             </Accordion>

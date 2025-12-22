@@ -1,4 +1,4 @@
-import { BaseStatus } from "../enums/userStatus.enum";
+import { BaseStatus } from "../enums/baseStatus.enum";
 import { BaseDto } from "./base.dto";
 
 // Request DTO for creating a short URL
@@ -10,6 +10,12 @@ export interface ShortUrlCreateRequestDto extends BaseDto {
   expireDate?: string;
 }
 
+export interface ShortUrlEditRequestDto {
+  title: string;
+  expireDate: string;
+  autoDelete: boolean;
+}
+
 // Response DTO for short URL information
 export interface ShortUrlResponseDto extends BaseDto {
   id: string;
@@ -18,4 +24,14 @@ export interface ShortUrlResponseDto extends BaseDto {
   title: string;
   isCustom: boolean;
   status: BaseStatus;
+}
+
+export interface ShortUrlEditResponseDto extends BaseDto {
+  id: string;
+  shortCode: string;
+  originalUrl: string;
+  title: string;
+  status: BaseStatus;
+  expireAt: string;
+  autoDelete: boolean;
 }

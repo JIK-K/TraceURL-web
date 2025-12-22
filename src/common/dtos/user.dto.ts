@@ -1,6 +1,6 @@
 // src/common/dto/UserResponseDto.ts
 
-import { BaseStatus } from "../enums/userStatus.enum";
+import { BaseStatus } from "../enums/baseStatus.enum";
 import { BaseDto } from "./base.dto";
 
 export interface UserDto extends BaseDto {

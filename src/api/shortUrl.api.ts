@@ -1,10 +1,17 @@
 import {
   ShortUrlCreateRequestDto,
+  ShortUrlEditRequestDto,
+  ShortUrlEditResponseDto,
   ShortUrlResponseDto,
 } from "@/common/dtos/shortUrl.dto";
-import { BaseStatus } from "@/common/enums/userStatus.enum";
+import { BaseStatus } from "@/common/enums/baseStatus.enum";
 import { ResponseDto } from "@/dtos/response.dto";
-import { getData, postData } from "@/utils/axios/serverHelper";
+import {
+  deleteData,
+  getData,
+  patchData,
+  postData,
+} from "@/utils/axios/serverHelper";
 import { AxiosResponse } from "axios";
 
 const baseUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}/short-url`;
@@ -28,4 +35,26 @@ export const getShortUrlList = (
     url += `&status=${status}`;
   }
   return getData(url);
+};
+
+export const getShortUrlEditData = (
+  shortCode: string
+): Promise<AxiosResponse<ResponseDto<ShortUrlEditResponseDto>>> => {
+  let url = `${baseUrl}/link/${shortCode}/edit`;
+  return getData(url);
+};
+
+export const editShortUrl = (
+  shortCode: string,
+  dto: ShortUrlEditRequestDto
+): Promise<AxiosResponse<ResponseDto<boolean>>> => {
+  let url = `${baseUrl}/link/${shortCode}/edit`;
+  return patchData(url, dto);
+};
+
+export const deleteShortUrl = (
+  shortCode: string
+): Promise<AxiosResponse<ResponseDto<boolean>>> => {
+  let url = `${baseUrl}/link/${shortCode}/edit`;
+  return deleteData(url);
 };

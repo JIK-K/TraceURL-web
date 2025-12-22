@@ -3,7 +3,7 @@
 import { getShortUrlList } from "@/api/shortUrl.api";
 import Pagination from "@/common/components/ui/pagination";
 import { ShortUrlResponseDto } from "@/common/dtos/shortUrl.dto";
-import { BaseStatus } from "@/common/enums/userStatus.enum";
+import { BaseStatus } from "@/common/enums/baseStatus.enum";
 import { formatKoreanDatetime } from "@/utils/string/string.util";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -192,7 +192,9 @@ export default function LinksSection() {
                         <div className="flex items-center justify-end gap-2">
                           <button
                             className="text-gray-500 hover:text-primary rounded-full hover:bg-primary/10"
-                            onClick={() => router.push(`/link/${link.id}/edit`)}
+                            onClick={() =>
+                              router.push(`/link/${link.shortCode}/edit`)
+                            }
                           >
                             <span className="p-2 material-symbols-outlined text-xl">
                               edit
@@ -201,7 +203,7 @@ export default function LinksSection() {
                           <button
                             className="text-gray-500 hover:text-primary rounded-full hover:bg-primary/10"
                             onClick={() =>
-                              router.push(`/link/${link.id}/dashboard`)
+                              router.push(`/link/${link.shortCode}/dashboard`)
                             }
                           >
                             <span className="p-2 material-symbols-outlined text-xl">
