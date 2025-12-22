@@ -15,8 +15,17 @@ export default function CreateLinkPage() {
   const [expireDate, setExpireDate] = useState("");
   const [isCustom, setIsCustom] = useState(true);
 
-  /* ===== Submit ===== */
   const handleCreate = () => {
+    if (!title || !expireDate) {
+      alert("제목(title)과 만료일(expireDate)을 모두 입력해주세요.");
+      return;
+    }
+
+    if (isCustom && !alias) {
+      alert("커스텀 설정을 사용하려면 Alias(별칭)를 입력해야 합니다.");
+      return;
+    }
+
     const payload = {
       originalUrl,
       title,

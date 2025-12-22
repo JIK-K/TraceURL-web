@@ -1,5 +1,6 @@
 "use client";
 
+import { downloadQrCode } from "@/api/qrCode.api";
 import {
   deleteShortUrl,
   editShortUrl,
@@ -82,6 +83,28 @@ export default function EditLinkPage() {
     }
   };
 
+  const handleDownloadQrCode = async () => {
+    if (data) {
+      const fileName = `${data.shortCode}.png`;
+      try {
+        const response = await downloadQrCode(fileName);
+
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+
+        link.setAttribute("download", fileName);
+        document.body.appendChild(link);
+        link.click();
+
+        link.parentNode?.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      } catch (error) {
+        console.error("Error downloading QR code:", error);
+      }
+    }
+  };
+
   const badge = getStatusBadge(data?.status ?? BaseStatus.INACTIVE);
 
   return (
@@ -110,7 +133,7 @@ export default function EditLinkPage() {
               </p>
             </div>
             <button
-              className="flex items-center gap-2 rounded-lg border border-red-200 px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 dark:border-red-900/50 dark:text-red-400 dark:hover:bg-red-900/20 transition-colors"
+              className="flex items-center gap-2 rounded-lg border border-red-200 px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 dark:border-red-900/50 dark:text-red-400 dark:hover:bg-red-900/20 transition-colors cursor-pointer"
               onClick={handleDelete}
             >
               <span className="material-symbols-outlined text-lg">delete</span>
@@ -246,18 +269,42 @@ export default function EditLinkPage() {
                   </label>
                 </div>
               </div>
+
+              <div className="rounded-lg border border-gray-200 bg-gray-50/50 p-4 dark:border-gray-700 dark:bg-gray-800/50">
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-col">
+                    <span className="text-sm font-medium text-gray-900 dark:text-white">
+                      QR Code Generation
+                    </span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                      Get a scannable QR code for your link to use in physical
+                      marking campaigns
+                    </span>
+                  </div>
+                  <button
+                    className="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 cursor-pointer"
+                    type="button"
+                    onClick={handleDownloadQrCode}
+                  >
+                    <span className="material-symbols-outlined text-gray-400">
+                      qr_code
+                    </span>
+                    Download QR
+                  </button>
+                </div>
+              </div>
             </form>
 
             <div className="flex items-center justify-end gap-3 border-t border-gray-200 bg-gray-50 px-6 py-4 dark:border-gray-800 dark:bg-gray-900/50">
               <button
-                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 cursor-pointer"
                 type="button"
                 onClick={() => router.push("/profile/links")}
               >
                 Cancel
               </button>
               <button
-                className="rounded-lg border border-transparent bg-primary px-4 py-2 text-sm font-bold text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                className="rounded-lg border border-transparent bg-primary px-4 py-2 text-sm font-bold text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 cursor-pointer"
                 type="submit"
                 onClick={handleEditSave}
               >
