@@ -17,11 +17,17 @@ import {
 } from "@/utils/string/string.util";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import BlockedItems from "./components/blockedItems";
+import CreateIpBlockModal from "./components/createIpBlockModal";
+import { createBlockIp, getIpBlockList, upBlockIp } from "@/api/ipBlock.api";
+import { IpBlockResponseDto } from "@/common/dtos/ipBlock.dto";
 
 export default function EditLinkPage() {
   const { id } = useParams();
   const router = useRouter();
   const [data, setData] = useState<ShortUrlEditResponseDto | null>(null);
+  const [ipBlockList, setIpBlockList] = useState<IpBlockResponseDto[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     getShortUrlEditData(id as string)
@@ -31,6 +37,14 @@ export default function EditLinkPage() {
       })
       .catch((error) => {
         console.error("Error fetching short URL edit data:", error);
+      });
+    getIpBlockList(id as string)
+      .then((response) => {
+        console.log("IP Block List:", response.data.data);
+        setIpBlockList(response.data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching IP Block List:", error);
       });
   }, []);
 
@@ -103,6 +117,52 @@ export default function EditLinkPage() {
         console.error("Error downloading QR code:", error);
       }
     }
+  };
+
+  const handleAddIpBlock = (blockIp: string, reason: string) => {
+    const ipRegex =
+      /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+
+    if (!blockIp) {
+      alert("IP 주소를 입력해주세요.");
+      return;
+    }
+
+    if (!ipRegex.test(blockIp)) {
+      alert("올바른 IP 주소 형식이 아닙니다. (예: 192.168.0.1)");
+      return;
+    }
+
+    console.log("검증 완료! IP Block 추가:", blockIp, reason);
+    const payload = {
+      shortCode: data?.shortCode!,
+      ipAddress: blockIp,
+      reason: reason,
+    };
+
+    createBlockIp(payload)
+      .then((response) => {
+        setIpBlockList([...ipBlockList, response.data.data]);
+      })
+      .catch((error) => {
+        const code = error.response?.data?.code;
+        if (code === "COMMON-005") {
+          alert("already blocked IP address exists");
+          return;
+        }
+      });
+
+    setIsOpen(false);
+  };
+
+  const handleUnblockIp = (id: string) => {
+    upBlockIp(id)
+      .then((response) => {
+        setIpBlockList(ipBlockList.filter((item) => item.id !== id));
+      })
+      .catch((error) => {
+        console.error("Error unblocking IP:", error);
+      });
   };
 
   const badge = getStatusBadge(data?.status ?? BaseStatus.INACTIVE);
@@ -293,6 +353,62 @@ export default function EditLinkPage() {
                   </button>
                 </div>
               </div>
+
+              <div className="rounded-lg border border-gray-200 bg-gray-50/50 p-4 dark:border-gray-700 dark:bg-gray-800/50">
+                <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-red-100 dark:bg-red-900/30">
+                      <span className="material-symbols-outlined text-red-600 dark:text-red-400">
+                        block
+                      </span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-sm font-medium text-gray-900 dark:text-white">
+                        IP BlockList
+                      </span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                        Block traffic from specific IP addresses.
+                      </span>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    className="group flex shrink-0 items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 hover:text-primary hover:border-primary transition-all dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-primary dark:hover:border-primary"
+                    onClick={() => setIsOpen(true)}
+                  >
+                    <span className="material-symbols-outlined text-[20px] text-gray-500 group-hover:text-primary dark:text-gray-400">
+                      add_circle
+                    </span>
+                    Add IP to BlockList
+                  </button>
+                </div>
+
+                <div className="overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+                  <ul
+                    className="divide-y divide-gray-200 dark:divide-gray-800"
+                    role="list"
+                  >
+                    {ipBlockList.length === 0 ? (
+                      <li className="px-4 py-3">
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          {" "}
+                          No IP blocks have been added yet.
+                        </p>
+                      </li>
+                    ) : (
+                      ipBlockList.map((item) => (
+                        <BlockedItems
+                          key={item.id}
+                          ipAddress={item.ipAddress}
+                          reason={item.reason}
+                          blockedAt={item.createdAt!}
+                          onUnblock={() => handleUnblockIp(item.id)}
+                        />
+                      ))
+                    )}
+                  </ul>
+                </div>
+              </div>
             </form>
 
             <div className="flex items-center justify-end gap-3 border-t border-gray-200 bg-gray-50 px-6 py-4 dark:border-gray-800 dark:bg-gray-900/50">
@@ -314,6 +430,12 @@ export default function EditLinkPage() {
           </div>
         </div>
       </main>
+      {isOpen && (
+        <CreateIpBlockModal
+          onClose={() => setIsOpen(false)}
+          onConfirm={handleAddIpBlock}
+        />
+      )}
     </div>
   );
 }
