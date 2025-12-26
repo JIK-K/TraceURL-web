@@ -1,96 +1,216 @@
 "use client";
 
-import { useState } from "react";
-import { chartData } from "../mock/analytics";
+import { useEffect, useState, useMemo, useRef } from "react";
+import { getChartClickData } from "@/api/analytics.api";
+import { useParams } from "next/navigation";
+import { AnalyticsChartResponseDto } from "@/common/dtos/analytics.dto";
 
 export default function TrafficChart() {
-  const [selectedRange, setSelectedRange] = useState("Month");
+  const { id } = useParams();
+  const svgRef = useRef<SVGSVGElement>(null); // SVG 좌표 계산을 위한 ref
+  const [selectedRange, setSelectedRange] = useState("7d");
+  const [data, setData] = useState<AnalyticsChartResponseDto | null>(null);
 
-  const ranges = ["Day", "Week", "Month"];
+  // 툴팁에 표시할 현재 활성화된 포인트 상태
+  const [activePoint, setActivePoint] = useState<any | null>(null);
 
-  const generatePath = (points: typeof chartData.points, isUV: boolean) => {
-    const pathData = points.map((point, index) => {
-      const x = point.x;
-      const y = isUV ? 149 - (point.uv / chartData.maxValue) * 120 : 149 - (point.pv / chartData.maxValue) * 120;
-      return index === 0 ? `M${x} ${y}` : `L${x} ${y}`;
-    });
-    return pathData.join(" ");
+  const ranges = [
+    { label: "Week", value: "7d" },
+    { label: "Month", value: "30d" },
+  ];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getChartClickData(id as string, selectedRange);
+        console.log(response);
+        setData(response.data.data);
+      } catch (error) {
+        console.error("Chart data fetch error:", error);
+      }
+    };
+    if (id) fetchData();
+  }, [id, selectedRange]);
+
+  const chartConfig = useMemo(() => {
+    if (!data || data.points.length === 0) return null;
+    const points = data.points;
+    const maxVal = Math.max(...points.map((p) => Math.max(p.pv, p.uv)), 10);
+    const width = 472;
+
+    const pointsWithCoords = points.map((p, i) => ({
+      ...p,
+      x: (i / (points.length - 1)) * width,
+      yPV: 149 - (p.pv / maxVal) * 120,
+      yUV: 149 - (p.uv / maxVal) * 120,
+    }));
+
+    return { points: pointsWithCoords, maxVal };
+  }, [data]);
+
+  // 마우스 이동 시 좌표 계산 및 툴팁 데이터 업데이트
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!chartConfig || !svgRef.current) return;
+
+    const svg = svgRef.current;
+    const rect = svg.getBoundingClientRect();
+
+    // SVG 내부의 상대적 X 좌표 계산 (0 ~ 472)
+    const mouseX = ((e.clientX - rect.left) / rect.width) * 472;
+
+    // 현재 X 좌표를 기준으로 가장 가까운 배열 인덱스 찾기
+    const index = Math.round((mouseX / 472) * (chartConfig.points.length - 1));
+    const safeIndex = Math.max(
+      0,
+      Math.min(index, chartConfig.points.length - 1)
+    );
+
+    setActivePoint(chartConfig.points[safeIndex]);
   };
 
-  const generateAreaPath = (points: typeof chartData.points, isUV: boolean) => {
-    const path = generatePath(points, isUV);
-    const lastPoint = points[points.length - 1];
-    const lastY = isUV
-      ? 149 - (lastPoint.uv / chartData.maxValue) * 120
-      : 149 - (lastPoint.pv / chartData.maxValue) * 120;
+  const generatePath = (isUV: boolean) => {
+    if (!chartConfig) return "";
+    return chartConfig.points
+      .map((p, i) => `${i === 0 ? "M" : "L"}${p.x} ${isUV ? p.yUV : p.yPV}`)
+      .join(" ");
+  };
+
+  const generateAreaPath = (isUV: boolean) => {
+    if (!chartConfig) return "";
+    const path = generatePath(isUV);
+    const lastPoint = chartConfig.points[chartConfig.points.length - 1];
     return `${path} L${lastPoint.x} 149 L0 149 Z`;
   };
 
+  if (!data)
+    return <div className="h-[300px] animate-pulse bg-gray-100 rounded-lg" />;
+
   return (
     <div className="flex flex-col gap-4 rounded-lg border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-6 shadow-sm">
+      {/* 상단 헤더 부분 생략 (기존 코드와 동일) */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex flex-col">
           <h3 className="text-lg font-bold leading-normal">Traffic Overview</h3>
           <div className="flex gap-4 text-xs font-medium mt-1">
             <div className="flex items-center gap-2 text-text-light dark:text-text-dark">
-              <span className="w-2 h-2 rounded-full bg-primary"></span> Visits (PV)
+              <span className="w-2 h-2 rounded-full bg-primary"></span> Unique
+              (UV)
             </div>
             <div className="flex items-center gap-2 text-subtext-light dark:text-subtext-dark">
-              <span className="w-2 h-2 rounded-full bg-primary-light/40 border border-primary/40"></span> Unique (UV)
+              <span className="w-2 h-2 rounded-full bg-primary-light/40 border border-primary/40"></span>{" "}
+              Visits (PV)
             </div>
           </div>
         </div>
+
         <div className="flex h-9 w-full sm:w-auto items-center justify-center rounded-lg bg-background-light dark:bg-background-dark p-1 border border-border-light dark:border-border-dark">
-          {ranges.map((range) => (
+          {ranges.map((r) => (
             <label
-              key={range}
-              className={`flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded px-3 text-subtext-light dark:text-subtext-dark text-xs transition-all ${
-                selectedRange === range ? "bg-card-light dark:bg-card-dark shadow-sm text-primary font-semibold" : ""
+              key={r.value}
+              className={`flex cursor-pointer h-full grow items-center justify-center rounded px-3 text-xs transition-all ${
+                selectedRange === r.value
+                  ? "bg-card-light dark:bg-card-dark shadow-sm text-primary font-semibold"
+                  : "text-subtext-light"
               }`}
             >
-              <span className="truncate">{range}</span>
+              <span>{r.label}</span>
               <input
-                className="invisible w-0"
-                name="date-range-filter"
+                className="hidden"
                 type="radio"
-                value={range}
-                checked={selectedRange === range}
-                onChange={() => setSelectedRange(range)}
+                name="range"
+                value={r.value}
+                checked={selectedRange === r.value}
+                onChange={() => setSelectedRange(r.value)}
               />
             </label>
           ))}
         </div>
       </div>
-      <div className="flex min-h-[250px] flex-1 flex-col gap-8 py-4 relative group">
-        <div className="absolute left-[60%] top-0 bottom-8 w-px bg-subtext-light/20 dark:bg-subtext-dark/20 z-10 hidden group-hover:block"></div>
-        <div className="absolute left-[60%] top-[40%] transform -translate-x-1/2 -translate-y-full mb-2 bg-text-light dark:bg-text-dark text-card-light dark:text-card-dark text-xs p-2 rounded shadow-xl z-20 hidden group-hover:block">
-          <p className="font-bold">May 18</p>
-          <p>PV: 2,431</p>
-          <p>UV: 1,043</p>
-        </div>
+
+      <div className="flex min-h-[250px] flex-1 flex-col py-4 relative group">
+        {/* 툴팁: activePoint가 있을 때만 렌더링 */}
+        {activePoint && (
+          <div
+            className="absolute pointer-events-none z-50 bg-text-light dark:bg-text-dark text-card-light dark:text-card-dark text-[10px] p-2 rounded shadow-xl flex flex-col gap-1 min-w-[90px]"
+            style={{
+              left: `${(activePoint.x / 472) * 100}%`,
+              top: "0px",
+              transform: "translateX(-50%)",
+            }}
+          >
+            <p className="font-bold border-b border-white/10 pb-1 mb-1">
+              {activePoint.label}
+            </p>
+            <p className="flex justify-between">
+              <span>PV:</span> <b>{activePoint.pv.toLocaleString()}</b>
+            </p>
+            <p className="flex justify-between">
+              <span>UV:</span> <b>{activePoint.uv.toLocaleString()}</b>
+            </p>
+          </div>
+        )}
+
         <svg
-          className="overflow-visible"
+          ref={svgRef}
+          className="overflow-visible cursor-crosshair"
           fill="none"
           height="100%"
-          preserveAspectRatio="none"
           viewBox="-3 0 478 150"
           width="100%"
           xmlns="http://www.w3.org/2000/svg"
+          onMouseMove={handleMouseMove}
+          onMouseLeave={() => setActivePoint(null)}
         >
-          <line className="text-border-light dark:text-border-dark" stroke="currentColor" strokeDasharray="4 4" x1="0" x2="472" y1="129" y2="129"></line>
-          <line className="text-border-light dark:text-border-dark" stroke="currentColor" strokeDasharray="4 4" x1="0" x2="472" y1="81" y2="81"></line>
-          <line className="text-border-light dark:text-border-dark" stroke="currentColor" strokeDasharray="4 4" x1="0" x2="472" y1="33" y2="33"></line>
+          {/* 활성화된 인덱스에 세로 가이드선 표시 */}
+          {activePoint && (
+            <line
+              x1={activePoint.x}
+              x2={activePoint.x}
+              y1="0"
+              y2="149"
+              stroke="currentColor"
+              className="text-primary opacity-20"
+              strokeWidth="1"
+            />
+          )}
 
-          <path d={generateAreaPath(chartData.points, true)} fill="url(#paint0_linear_chart)"></path>
+          {/* 차트 경로들 */}
+          <path d={generateAreaPath(true)} fill="url(#paint0_linear_chart)" />
+          <path
+            d={generatePath(false)}
+            stroke="#10b981"
+            strokeDasharray="4 2"
+            strokeOpacity="0.3"
+            strokeWidth="2"
+          />
+          <path
+            d={generatePath(true)}
+            stroke="#10b981"
+            strokeLinecap="round"
+            strokeWidth="3"
+          />
 
-          <path d={generatePath(chartData.points, false)} stroke="#10b981" strokeDasharray="4 2" strokeOpacity="0.3" strokeWidth="2"></path>
-
-          <path d={generatePath(chartData.points, true)} stroke="#10b981" strokeLinecap="round" strokeWidth="3"></path>
+          {/* 활성화된 포인트 위에 점 찍기 */}
+          {activePoint && (
+            <circle
+              cx={activePoint.x}
+              cy={activePoint.yUV}
+              r="4"
+              fill="#10b981"
+            />
+          )}
 
           <defs>
-            <linearGradient gradientUnits="userSpaceOnUse" id="paint0_linear_chart" x1="236" x2="236" y1="1" y2="149">
-              <stop stopColor="#10b981" stopOpacity="0.25"></stop>
-              <stop offset="1" stopColor="#10b981" stopOpacity="0"></stop>
+            <linearGradient
+              id="paint0_linear_chart"
+              x1="236"
+              x2="236"
+              y1="1"
+              y2="149"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stopColor="#10b981" stopOpacity="0.25" />
+              <stop offset="1" stopColor="#10b981" stopOpacity="0" />
             </linearGradient>
           </defs>
         </svg>
@@ -98,4 +218,3 @@ export default function TrafficChart() {
     </div>
   );
 }
-

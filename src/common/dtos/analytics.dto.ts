@@ -28,6 +28,26 @@ export interface AnalyticsSummaryResponseDto {
   topCountry: TopCountry;
 }
 
+export interface AnalyticsChartResponseDto {
+  points: ChartPoint[];
+}
+
+export interface AnalyticsDetailResponseDto {
+  devices: DetailItem[];
+  browsers: DetailItem[];
+  platforms: DetailItem[];
+}
+
+//===============================================//
+// Additional Interfaces
+//===============================================//
+
+export interface DetailItem {
+  label: string;
+  count: number;
+  percentage: number;
+}
+
 export interface TopCountry {
   name: string;
   percent: number;
@@ -37,4 +57,10 @@ export interface TopCountry {
 export interface StatDetail {
   value: number;
   change: number;
+}
+
+export interface ChartPoint {
+  label: string;
+  pv: number;
+  uv: number;
 }

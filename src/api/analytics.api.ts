@@ -1,4 +1,6 @@
 import {
+  AnalyticsChartResponseDto,
+  AnalyticsDetailResponseDto,
   AnalyticsSummaryResponseDto,
   RecentClickResponseDto,
 } from "@/common/dtos/analytics.dto";
@@ -24,5 +26,20 @@ export const getSummaryClickData = (
   shortCode: string
 ): Promise<AxiosResponse<ResponseDto<AnalyticsSummaryResponseDto>>> => {
   let url = `${baseUrl}/${shortCode}/summary`;
+  return getData(url);
+};
+
+export const getChartClickData = (
+  shortCode: string,
+  range: string = "7d"
+): Promise<AxiosResponse<ResponseDto<AnalyticsChartResponseDto>>> => {
+  let url = `${baseUrl}/${shortCode}/chart?range=${range}`;
+  return getData(url);
+};
+
+export const getDetailClickData = (
+  shortCode: string
+): Promise<AxiosResponse<ResponseDto<AnalyticsDetailResponseDto>>> => {
+  let url = `${baseUrl}/${shortCode}/details`;
   return getData(url);
 };

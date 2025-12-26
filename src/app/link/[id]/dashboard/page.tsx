@@ -1,17 +1,33 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import DeviceBreakdown from "./components/deviceBreakdown";
-import HourlyVisits from "./components/hourlyVisits";
 import RecentClicksTable from "./components/recentClicksTable";
 import StatsCards from "./components/statsCard";
 import TopBrowsers from "./components/topBrowsers";
 import TopReferrers from "./components/topReferrers";
 import TrafficChart from "./components/trafficChart";
 import VisitsByLocation from "./components/visitsByLocation";
+import { useEffect, useState } from "react";
+import { getDetailClickData } from "@/api/analytics.api";
+import { AnalyticsDetailResponseDto } from "@/common/dtos/analytics.dto";
+import PlatformBreakdown from "./components/PlatformBreakdown";
 
 export default function DashboardPage() {
+  const { id } = useParams();
   const router = useRouter();
+  const [detail, setDetail] = useState<AnalyticsDetailResponseDto>();
+
+  useEffect(() => {
+    getDetailClickData(id as string)
+      .then((response) => {
+        console.log(response);
+        setDetail(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   return (
     <>
       <header className="flex flex-col items-start justify-center whitespace-nowrap border-b border-border-light dark:border-border-dark px-2 sm:px-4 py-4 mb-6">
@@ -46,9 +62,9 @@ export default function DashboardPage() {
         <StatsCards />
         <TrafficChart />
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <DeviceBreakdown />
-          <HourlyVisits />
-          <TopBrowsers />
+          <DeviceBreakdown devices={detail?.devices} />
+          <PlatformBreakdown platforms={detail?.platforms} />
+          <TopBrowsers browsers={detail?.browsers} />
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <VisitsByLocation />
