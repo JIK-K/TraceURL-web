@@ -1,8 +1,56 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { recentClicks } from "../mock/analytics";
+import { useParams } from "next/navigation";
+import { getRecentClickList } from "@/api/analytics.api";
+import { RecentClickResponseDto } from "@/common/dtos/analytics.dto";
 
 export default function RecentClicksTable() {
+  const { id } = useParams();
+  const [recentClicks, setRecentClicks] = useState<RecentClickResponseDto[]>(
+    []
+  );
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false); // 로딩 상태 추가
+  const size = 5;
+
+  useEffect(() => {
+    if (id) {
+      getRecentClickList(id as string, page, size)
+        .then((response) => {
+          console.log(response);
+          setRecentClicks(response.data.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching recent clicks:", error);
+        });
+    }
+  }, [id]);
+
+  const fetchMoreClicks = async () => {
+    if (loading || !id) return; // 로딩 중이면 중복 클릭 방지
+
+    const nextPage = page + 1;
+    setLoading(true);
+
+    try {
+      const response = await getRecentClickList(id as string, nextPage, size);
+      const newData = response.data.data;
+
+      if (newData.length > 0) {
+        setRecentClicks((prev) => [...prev, ...newData]); // 기존 데이터 + 새 데이터
+        setPage(nextPage); // 페이지 번호 업데이트
+      } else {
+        alert("더 이상 불러올 데이터가 없습니다.");
+      }
+    } catch (error) {
+      console.error("Error fetching more clicks:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4 rounded-lg border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-6">
       <div className="flex items-center justify-between">
@@ -11,10 +59,13 @@ export default function RecentClicksTable() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
             <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
           </span>
-          <h3 className="text-lg font-semibold leading-normal">Recent Click Activity</h3>
+          <h3 className="text-lg font-semibold leading-normal">
+            Recent Click Activity
+          </h3>
         </div>
         <button className="text-sm text-subtext-light dark:text-subtext-dark hover:text-primary flex items-center gap-1">
-          <span className="material-symbols-outlined text-base">download</span> Export CSV
+          <span className="material-symbols-outlined text-base">download</span>{" "}
+          Export CSV
         </button>
       </div>
       <div className="overflow-x-auto rounded-lg border border-border-light dark:border-border-dark">
@@ -39,7 +90,11 @@ export default function RecentClicksTable() {
                 <td className="py-3 px-4 font-mono text-xs">{click.ip}</td>
                 <td className="py-3 px-4">
                   <div className="flex items-center gap-2">
-                    <img alt={click.locationCode} className="w-4 rounded-sm" src={click.flagImage} />
+                    <img
+                      alt={click.locationCode}
+                      className="w-4 rounded-sm"
+                      src={click.flagImage}
+                    />
                     {click.location}
                   </div>
                 </td>
@@ -74,9 +129,13 @@ export default function RecentClicksTable() {
         </table>
       </div>
       <div className="flex items-center justify-center pt-2">
-        <button className="text-sm font-medium text-primary hover:underline">View All Activity</button>
+        <button
+          className="text-sm font-medium text-primary hover:underline"
+          onClick={fetchMoreClicks}
+        >
+          View More Activity
+        </button>
       </div>
     </div>
   );
 }
-

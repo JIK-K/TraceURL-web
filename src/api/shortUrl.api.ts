@@ -26,11 +26,11 @@ export const createShortUrl = (
 
 export const getShortUrlList = (
   page: number = 1,
-  limit: number = 10,
+  size: number = 10,
   sort: string = "createdAt,desc",
   status?: BaseStatus
 ): Promise<AxiosResponse<ResponseDto<ShortUrlResponseDto[]>>> => {
-  let url = `${baseUrl}/list?page=${page - 1}&limit=${limit}&sort=${sort}`;
+  let url = `${baseUrl}/list?page=${page - 1}&size=${size}&sort=${sort}`;
   if (status) {
     url += `&status=${status}`;
   }
