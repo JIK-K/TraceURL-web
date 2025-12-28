@@ -36,12 +36,20 @@ export interface AnalyticsDetailResponseDto {
   devices: DetailItem[];
   browsers: DetailItem[];
   platforms: DetailItem[];
+  countries: CountryItem[];
+  referrers: DetailItem[];
 }
 
 //===============================================//
 // Additional Interfaces
 //===============================================//
-
+export interface CountryItem {
+  countryCode: string;
+  countryName: string;
+  flagUrl: string;
+  count: number;
+  percentage: number;
+}
 export interface DetailItem {
   label: string;
   count: number;

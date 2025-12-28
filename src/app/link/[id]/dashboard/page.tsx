@@ -44,7 +44,9 @@ export default function DashboardPage() {
     if (!id) return;
 
     getDetailClickData(id as string)
-      .then((res) => setDetail(res.data.data))
+      .then((res) => {
+        console.log(res), setDetail(res.data.data);
+      })
       .catch(console.error);
     getSummaryClickData(id as string)
       .then((res) => setSummary(res.data.data))
@@ -134,8 +136,8 @@ export default function DashboardPage() {
           <TopBrowsers browsers={detail?.browsers} />
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <VisitsByLocation />
-          <TopReferrers />
+          <VisitsByLocation countries={detail?.countries} />
+          <TopReferrers referrers={detail?.referrers} />
         </div>
         <RecentClicksTable
           clicks={recentClicks}
