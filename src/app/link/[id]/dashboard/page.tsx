@@ -9,25 +9,87 @@ import TopReferrers from "./components/topReferrers";
 import TrafficChart from "./components/trafficChart";
 import VisitsByLocation from "./components/visitsByLocation";
 import { useEffect, useState } from "react";
-import { getDetailClickData } from "@/api/analytics.api";
-import { AnalyticsDetailResponseDto } from "@/common/dtos/analytics.dto";
+import {
+  getChartClickData,
+  getDetailClickData,
+  getRecentClickList,
+  getSummaryClickData,
+} from "@/api/analytics.api";
+import {
+  AnalyticsChartResponseDto,
+  AnalyticsDetailResponseDto,
+  AnalyticsSummaryResponseDto,
+  RecentClickResponseDto,
+} from "@/common/dtos/analytics.dto";
 import PlatformBreakdown from "./components/PlatformBreakdown";
 
 export default function DashboardPage() {
   const { id } = useParams();
   const router = useRouter();
   const [detail, setDetail] = useState<AnalyticsDetailResponseDto>();
+  const [summary, setSummary] = useState<AnalyticsSummaryResponseDto>();
+
+  const [chartData, setChartData] = useState<AnalyticsChartResponseDto | null>(
+    null
+  );
+  const [selectedRange, setSelectedRange] = useState("7d");
+  const [isChartLoading, setIsChartLoading] = useState(false);
+  const [recentClicks, setRecentClicks] = useState<RecentClickResponseDto[]>(
+    []
+  );
+  const [tablePage, setTablePage] = useState(1);
+  const [isTableLoading, setIsTableLoading] = useState(false);
+  const TABLE_SIZE = 5;
+  useEffect(() => {
+    if (!id) return;
+
+    getDetailClickData(id as string)
+      .then((res) => setDetail(res.data.data))
+      .catch(console.error);
+    getSummaryClickData(id as string)
+      .then((res) => setSummary(res.data.data))
+      .catch(console.error);
+    getRecentClickList(id as string, 1, TABLE_SIZE)
+      .then((res) => setRecentClicks(res.data.data))
+      .catch(console.error);
+  }, [id]);
 
   useEffect(() => {
-    getDetailClickData(id as string)
-      .then((response) => {
-        console.log(response);
-        setDetail(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+    if (!id) return;
+
+    setIsChartLoading(true);
+    getChartClickData(id as string, selectedRange)
+      .then((res) => setChartData(res.data.data))
+      .catch(console.error)
+      .finally(() => setIsChartLoading(false));
+  }, [id, selectedRange]);
+
+  const handleLoadMoreClicks = async () => {
+    if (isTableLoading || !id) return;
+
+    const nextPage = tablePage + 1;
+    setIsTableLoading(true);
+
+    try {
+      const response = await getRecentClickList(
+        id as string,
+        nextPage,
+        TABLE_SIZE
+      );
+      const newData = response.data.data;
+
+      if (newData.length > 0) {
+        setRecentClicks((prev) => [...prev, ...newData]);
+        setTablePage(nextPage);
+      } else {
+        alert("더 이상 불러올 데이터가 없습니다.");
+      }
+    } catch (error) {
+      console.error("Error fetching more clicks:", error);
+    } finally {
+      setIsTableLoading(false);
+    }
+  };
   return (
     <>
       <header className="flex flex-col items-start justify-center whitespace-nowrap border-b border-border-light dark:border-border-dark px-2 sm:px-4 py-4 mb-6">
@@ -59,8 +121,13 @@ export default function DashboardPage() {
         </div>
       </header>
       <main className="flex flex-col gap-6">
-        <StatsCards />
-        <TrafficChart />
+        <StatsCards summary={summary} />
+        <TrafficChart
+          data={chartData}
+          selectedRange={selectedRange}
+          onRangeChange={setSelectedRange}
+          isLoading={isChartLoading}
+        />
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <DeviceBreakdown devices={detail?.devices} />
           <PlatformBreakdown platforms={detail?.platforms} />
@@ -70,7 +137,11 @@ export default function DashboardPage() {
           <VisitsByLocation />
           <TopReferrers />
         </div>
-        <RecentClicksTable />
+        <RecentClicksTable
+          clicks={recentClicks}
+          onLoadMore={handleLoadMoreClicks}
+          isLoading={isTableLoading}
+        />
       </main>
     </>
   );

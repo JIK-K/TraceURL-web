@@ -1,15 +1,17 @@
 "use client";
 
-import { useEffect, useState, useMemo, useRef } from "react";
-import { getChartClickData } from "@/api/analytics.api";
-import { useParams } from "next/navigation";
+import { useState, useMemo, useRef } from "react";
 import { AnalyticsChartResponseDto } from "@/common/dtos/analytics.dto";
+interface TrafficChartProps {
+  data: AnalyticsChartResponseDto | null;
+  selectedRange: string;
+  onRangeChange: (range: string) => void;
+  isLoading: boolean;
+}
 
-export default function TrafficChart() {
-  const { id } = useParams();
+export default function TrafficChart(props: TrafficChartProps) {
+  const { data, selectedRange, onRangeChange, isLoading } = props;
   const svgRef = useRef<SVGSVGElement>(null); // SVG 좌표 계산을 위한 ref
-  const [selectedRange, setSelectedRange] = useState("7d");
-  const [data, setData] = useState<AnalyticsChartResponseDto | null>(null);
 
   // 툴팁에 표시할 현재 활성화된 포인트 상태
   const [activePoint, setActivePoint] = useState<any | null>(null);
@@ -18,19 +20,6 @@ export default function TrafficChart() {
     { label: "Week", value: "7d" },
     { label: "Month", value: "30d" },
   ];
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getChartClickData(id as string, selectedRange);
-        console.log(response);
-        setData(response.data.data);
-      } catch (error) {
-        console.error("Chart data fetch error:", error);
-      }
-    };
-    if (id) fetchData();
-  }, [id, selectedRange]);
 
   const chartConfig = useMemo(() => {
     if (!data || data.points.length === 0) return null;
@@ -120,7 +109,7 @@ export default function TrafficChart() {
                 name="range"
                 value={r.value}
                 checked={selectedRange === r.value}
-                onChange={() => setSelectedRange(r.value)}
+                onChange={() => onRangeChange(r.value)}
               />
             </label>
           ))}
@@ -181,13 +170,13 @@ export default function TrafficChart() {
             stroke="#10b981"
             strokeDasharray="4 2"
             strokeOpacity="0.3"
-            strokeWidth="2"
+            strokeWidth="1"
           />
           <path
             d={generatePath(true)}
             stroke="#10b981"
             strokeLinecap="round"
-            strokeWidth="3"
+            strokeWidth="1"
           />
 
           {/* 활성화된 포인트 위에 점 찍기 */}
@@ -195,7 +184,7 @@ export default function TrafficChart() {
             <circle
               cx={activePoint.x}
               cy={activePoint.yUV}
-              r="4"
+              r="2"
               fill="#10b981"
             />
           )}

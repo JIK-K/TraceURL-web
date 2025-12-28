@@ -1,56 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { recentClicks } from "../mock/analytics";
-import { useParams } from "next/navigation";
-import { getRecentClickList } from "@/api/analytics.api";
 import { RecentClickResponseDto } from "@/common/dtos/analytics.dto";
 
-export default function RecentClicksTable() {
-  const { id } = useParams();
-  const [recentClicks, setRecentClicks] = useState<RecentClickResponseDto[]>(
-    []
-  );
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false); // 로딩 상태 추가
-  const size = 5;
+interface RecentClicksTableProps {
+  clicks: RecentClickResponseDto[];
+  onLoadMore: () => void;
+  isLoading: boolean;
+}
 
-  useEffect(() => {
-    if (id) {
-      getRecentClickList(id as string, page, size)
-        .then((response) => {
-          console.log(response);
-          setRecentClicks(response.data.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching recent clicks:", error);
-        });
-    }
-  }, [id]);
-
-  const fetchMoreClicks = async () => {
-    if (loading || !id) return; // 로딩 중이면 중복 클릭 방지
-
-    const nextPage = page + 1;
-    setLoading(true);
-
-    try {
-      const response = await getRecentClickList(id as string, nextPage, size);
-      const newData = response.data.data;
-
-      if (newData.length > 0) {
-        setRecentClicks((prev) => [...prev, ...newData]); // 기존 데이터 + 새 데이터
-        setPage(nextPage); // 페이지 번호 업데이트
-      } else {
-        alert("더 이상 불러올 데이터가 없습니다.");
-      }
-    } catch (error) {
-      console.error("Error fetching more clicks:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+export default function RecentClicksTable(props: RecentClicksTableProps) {
+  const { clicks, onLoadMore, isLoading } = props;
   return (
     <div className="flex flex-col gap-4 rounded-lg border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-6">
       <div className="flex items-center justify-between">
@@ -81,7 +40,7 @@ export default function RecentClicksTable() {
             </tr>
           </thead>
           <tbody className="text-sm text-text-light dark:text-text-dark divide-y divide-border-light dark:divide-border-dark">
-            {recentClicks.map((click, index) => (
+            {clicks.map((click, index) => (
               <tr
                 key={index}
                 className="hover:bg-background-light dark:hover:bg-background-dark/50 transition-colors"
@@ -131,7 +90,7 @@ export default function RecentClicksTable() {
       <div className="flex items-center justify-center pt-2">
         <button
           className="text-sm font-medium text-primary hover:underline"
-          onClick={fetchMoreClicks}
+          onClick={onLoadMore}
         >
           View More Activity
         </button>

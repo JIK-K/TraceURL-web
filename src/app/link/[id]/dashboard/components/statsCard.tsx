@@ -1,26 +1,10 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { stats } from "../mock/analytics";
-import { useParams } from "next/navigation";
-import { getSummaryClickData } from "@/api/analytics.api";
 import { AnalyticsSummaryResponseDto } from "@/common/dtos/analytics.dto";
 
-export default function StatsCards() {
-  const { id } = useParams();
-  const [stats, setStats] = useState<AnalyticsSummaryResponseDto>();
-  useEffect(() => {
-    if (id) {
-      getSummaryClickData(id as string)
-        .then((response) => {
-          console.log(response);
-          setStats(response.data.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching summary click data:", error);
-        });
-    }
-  }, []);
+interface StatsCardsProps {
+  summary?: AnalyticsSummaryResponseDto;
+}
+export default function StatsCards(props: StatsCardsProps) {
+  const { summary } = props;
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <div className="flex flex-col justify-between rounded-lg p-5 bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark shadow-sm">
@@ -34,13 +18,13 @@ export default function StatsCards() {
         </div>
         <div className="flex items-baseline gap-2">
           <p className="text-3xl font-bold leading-tight">
-            {stats?.pv.value.toLocaleString()}
+            {summary?.pv.value.toLocaleString()}
           </p>
           <span className="text-xs font-medium text-primary bg-primary/10 px-1.5 py-0.5 rounded flex items-center gap-0.5">
             <span className="material-symbols-outlined text-[12px]">
               trending_up
             </span>{" "}
-            {stats?.pv.change}%
+            {summary?.pv.change}%
           </span>
         </div>
       </div>
@@ -56,13 +40,13 @@ export default function StatsCards() {
         </div>
         <div className="flex items-baseline gap-2">
           <p className="text-3xl font-bold leading-tight">
-            {stats?.uv.value.toLocaleString()}
+            {summary?.uv.value.toLocaleString()}
           </p>
           <span className="text-xs font-medium text-primary bg-primary/10 px-1.5 py-0.5 rounded flex items-center gap-0.5">
             <span className="material-symbols-outlined text-[12px]">
               trending_up
             </span>{" "}
-            {stats?.uv.change}%
+            {summary?.uv.change}%
           </span>
         </div>
       </div>
@@ -79,20 +63,20 @@ export default function StatsCards() {
         <div className="flex flex-col justify-between">
           <div className="flex justify-between text-xs font-medium">
             <span className="text-text-light dark:text-text-dark">
-              New: {stats?.newRate}%
+              New: {summary?.newRate}%
             </span>
             <span className="text-subtext-light dark:text-subtext-dark">
-              Returning: {stats?.returnRate}%
+              Returning: {summary?.returnRate}%
             </span>
           </div>
           <div className="flex w-full h-2 rounded-full overflow-hidden bg-background-light dark:bg-background-dark">
             <div
               className="bg-primary h-full"
-              style={{ width: `${stats?.newRate}%` }}
+              style={{ width: `${summary?.newRate}%` }}
             ></div>
             <div
               className="bg-primary-light/30 h-full"
-              style={{ width: `${stats?.returnRate}%` }}
+              style={{ width: `${summary?.returnRate}%` }}
             ></div>
           </div>
         </div>
@@ -108,17 +92,19 @@ export default function StatsCards() {
           </p>
         </div>
         <div className="flex items-center gap-3 mt-1">
-          <img
-            alt={`${stats?.topCountry.name} Flag`}
-            className="rounded w-8 h-auto shadow-sm"
-            src={stats?.topCountry.flagImage}
-          />
+          {summary?.topCountry.flagImage && (
+            <img
+              alt={`${summary?.topCountry.name} Flag`}
+              className="rounded w-8 h-auto shadow-sm"
+              src={summary.topCountry.flagImage}
+            />
+          )}
           <div>
             <p className="text-xl font-bold leading-tight">
-              {stats?.topCountry.name}
+              {summary?.topCountry.name}
             </p>
             <p className="text-xs text-subtext-light dark:text-subtext-dark">
-              {stats?.topCountry.percent}% of total traffic
+              {summary?.topCountry.percent}% of total traffic
             </p>
           </div>
         </div>
