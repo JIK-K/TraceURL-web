@@ -1,6 +1,6 @@
 import { UserDto } from "@/common/dtos/user.dto";
 import { ResponseDto } from "@/dtos/response.dto";
-import { getData, patchData } from "@/utils/axios/serverHelper";
+import { deleteData, getData, patchData } from "@/utils/axios/serverHelper";
 import { AxiosResponse } from "axios";
 
 const baseUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}/user`;
@@ -17,4 +17,9 @@ export const updateUserName = (
   let url = `${baseUrl}/name`;
   console.log("Request URL:", url);
   return patchData(url, { displayName });
+};
+
+export const withdraw = () => {
+  let url = `${baseUrl}/remove`;
+  return deleteData(url);
 };

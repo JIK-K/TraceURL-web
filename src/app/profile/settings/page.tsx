@@ -1,6 +1,11 @@
 "use client";
 
+import { withdraw } from "@/api/user.api";
+
 export default function SettingsSection() {
+  const handleSave = () => {
+    alert("saved");
+  };
   return (
     <div className="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-x-hidden">
       {/* MAIN */}
@@ -96,6 +101,7 @@ export default function SettingsSection() {
                            hover:bg-red-700
                            active:scale-[0.98]
                            transition"
+                onClick={withdraw}
               >
                 Delete Account
               </button>
@@ -106,21 +112,13 @@ export default function SettingsSection() {
         {/* FOOTER ACTIONS */}
         <div className="sticky bottom-0 mt-12 flex justify-end gap-3 border-t border-gray-200 dark:border-gray-700/60 dark:bg-background-dark/80 backdrop-blur-md px-2 py-4">
           <button
-            className="h-10 px-4 rounded-lg bg-gray-100 text-sm font-bold
-                       cursor-pointer
-                       hover:bg-gray-200
-                       active:scale-[0.98]
-                       transition"
-          >
-            Cancel
-          </button>
-          <button
             className="h-10 px-6 rounded-lg bg-primary text-white text-sm font-bold
                        cursor-pointer
                        shadow-lg shadow-primary/20
                        hover:shadow-primary/40 hover:-translate-y-[1px]
                        active:translate-y-0 active:scale-[0.98]
                        transition-all"
+            onClick={handleSave}
           >
             Save Changes
           </button>

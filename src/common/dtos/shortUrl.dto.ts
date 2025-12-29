@@ -14,6 +14,7 @@ export interface ShortUrlEditRequestDto {
   title: string;
   expireDate: string;
   autoDelete: boolean;
+  status: BaseStatus;
 }
 
 // Response DTO for short URL information

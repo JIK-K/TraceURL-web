@@ -71,6 +71,7 @@ export default function EditLinkPage() {
         title: data.title,
         expireDate: data.expireAt,
         autoDelete: data.autoDelete,
+        status: data.status,
       };
 
       console.log(dto);
@@ -165,6 +166,25 @@ export default function EditLinkPage() {
       });
   };
 
+  const handleStatusChange = () => {
+    if (!data) return;
+
+    setData((prev) => {
+      if (!prev) return null;
+
+      // 현재 상태가 ACTIVE이면 INACTIVE로, 아니면 ACTIVE로 변경
+      const nextStatus =
+        prev.status === BaseStatus.ACTIVE
+          ? BaseStatus.INACTIVE
+          : BaseStatus.ACTIVE;
+
+      return {
+        ...prev,
+        status: nextStatus,
+      };
+    });
+  };
+
   const badge = getStatusBadge(data?.status ?? BaseStatus.INACTIVE);
 
   return (
@@ -220,7 +240,8 @@ export default function EditLinkPage() {
                   </div>
                 </div>
                 <span
-                  className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${badge.className}`}
+                  className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${badge.className} cursor-pointer`}
+                  onClick={handleStatusChange}
                 >
                   {badge.label}
                 </span>

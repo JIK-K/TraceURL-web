@@ -12,10 +12,12 @@ const Header = () => {
   const accessToken = getCookie("tra_atk");
   useEffect(() => {
     if (accessToken) {
-      getUserData().then((res) => {
-        setUser(res.data.data);
-        console.log("header data:", res.data.data);
-      });
+      getUserData()
+        .then((res) => {
+          setUser(res.data.data);
+          console.log("header data:", res.data.data);
+        })
+        .catch(console.error);
     }
   }, []);
 
