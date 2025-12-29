@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function LoginPage() {
   return (
     <>
-      <div className="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden font-display">
+      <div className="relative flex min-h-screen w-full flex-col bg-primary-light dark:bg-background-dark group/design-root overflow-x-hidden font-display">
         <div className="layout-container flex h-full grow flex-col">
           <div className="px-4 flex flex-1 justify-center items-center py-5">
             <div className="layout-content-container flex flex-col max-w-[420px] flex-1">

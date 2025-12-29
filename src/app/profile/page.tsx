@@ -1,11 +1,20 @@
 "use client";
 import { updateUserName } from "@/api/user.api";
 import { useUserStore } from "@/common/zustand/user.zustand";
-import { useState } from "react";
+import { getCookie } from "@/utils/cookie/cookie";
+import { useEffect, useState } from "react";
 
 export default function ProfileSection() {
   const { user, setUser } = useUserStore();
   const [displayName, setDisplayName] = useState(user?.displayName || "");
+
+  useEffect(() => {
+    const cookie = getCookie("tra_atk");
+    if (!cookie) {
+      window.location.replace("/login");
+      alert("Login is required.");
+    }
+  }, []);
 
   const handleSaveChanges = () => {
     updateUserName(displayName).then((res) => {
