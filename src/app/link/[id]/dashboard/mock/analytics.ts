@@ -1,0 +1,169 @@
+export const stats = {
+  pv: { value: 84592, change: 12 },
+  uv: { value: 42105, change: 5.4 },
+  newRate: 65,
+  returnRate: 35,
+  topCountry: {
+    name: "United States",
+    percent: 32,
+    flag: "🇺🇸",
+    flagImage: "https://flagcdn.com/w40/us.png",
+  },
+};
+
+export const deviceStats = [
+  { label: "Mobile (iOS/Android)", percent: 55 },
+  { label: "Desktop (PC/Mac)", percent: 30 },
+  { label: "Tablet/Other", percent: 15 },
+];
+
+export const browserStats = [
+  { name: "Chrome", percent: 62 },
+  { name: "Safari", percent: 24 },
+  { name: "Firefox", percent: 8 },
+  { name: "Edge", percent: 4 },
+  { name: "Others", percent: 2 },
+];
+
+export const referrerStats = [
+  { name: "google.com", count: 12345, percent: 85 },
+  { name: "twitter.com / X", count: 8910, percent: 65 },
+  { name: "facebook.com", count: 5123, percent: 40 },
+  { name: "Direct / Email", count: 2345, percent: 15 },
+];
+
+export const locationStats = [
+  {
+    country: "USA",
+    city: "New York",
+    count: 12402,
+    flagImage: "https://flagcdn.com/w40/us.png",
+  },
+  {
+    country: "Germany",
+    city: "Berlin",
+    count: 8102,
+    flagImage: "https://flagcdn.com/w40/de.png",
+  },
+  {
+    country: "UK",
+    city: "London",
+    count: 5321,
+    flagImage: "https://flagcdn.com/w40/gb.png",
+  },
+  {
+    country: "India",
+    city: "Mumbai",
+    count: 4120,
+    flagImage: "https://flagcdn.com/w40/in.png",
+  },
+];
+
+export const hourlyStats = [
+  { hour: "00:00", height: 10 },
+  { hour: "01:00", height: 5 },
+  { hour: "02:00", height: 8 },
+  { hour: "03:00", height: 4 },
+  { hour: "04:00", height: 6 },
+  { hour: "05:00", height: 12 },
+  { hour: "06:00", height: 25 },
+  { hour: "07:00", height: 45 },
+  { hour: "08:00", height: 65 },
+  { hour: "09:00", height: 85 },
+  { hour: "10:00", height: 75 },
+  { hour: "11:00", height: 60 },
+  { hour: "12:00", height: 50 },
+  { hour: "13:00", height: 55 },
+  { hour: "14:00", height: 58 },
+  { hour: "15:00", height: 45 },
+  { hour: "16:00", height: 40 },
+  { hour: "17:00", height: 35 },
+  { hour: "18:00", height: 50 },
+  { hour: "19:00", height: 70 },
+  { hour: "20:00", height: 80 },
+  { hour: "21:00", height: 65 },
+  { hour: "22:00", height: 40 },
+  { hour: "23:00", height: 20 },
+];
+
+export const recentClicks = [
+  {
+    time: "Just now",
+    ip: "192.168.1.***",
+    location: "New York, US",
+    locationCode: "US",
+    device: "Chrome (Android)",
+    deviceIcon: "smartphone",
+    referrer: "t.co/xyz...",
+    referrerFull: "https://t.co/xyz",
+    type: "New",
+    flagImage: "https://flagcdn.com/w40/us.png",
+  },
+  {
+    time: "2 mins ago",
+    ip: "201.44.12.***",
+    location: "Sao Paulo, BR",
+    locationCode: "BR",
+    device: "Safari (macOS)",
+    deviceIcon: "laptop_mac",
+    referrer: "Direct",
+    referrerFull: "Direct",
+    type: "Returning",
+    flagImage: "https://flagcdn.com/w40/br.png",
+  },
+  {
+    time: "5 mins ago",
+    ip: "84.12.55.***",
+    location: "Berlin, DE",
+    locationCode: "DE",
+    device: "Firefox (Win10)",
+    deviceIcon: "desktop_windows",
+    referrer: "google.de",
+    referrerFull: "https://google.de",
+    type: "New",
+    flagImage: "https://flagcdn.com/w40/de.png",
+  },
+  {
+    time: "8 mins ago",
+    ip: "112.55.21.***",
+    location: "Tokyo, JP",
+    locationCode: "JP",
+    device: "Safari (iOS)",
+    deviceIcon: "smartphone",
+    referrer: "instagram.com",
+    referrerFull: "https://instagram.com",
+    type: "New",
+    flagImage: "https://flagcdn.com/w40/jp.png",
+  },
+  {
+    time: "12 mins ago",
+    ip: "103.4.12.***",
+    location: "Mumbai, IN",
+    locationCode: "IN",
+    device: "Chrome (Android)",
+    deviceIcon: "smartphone",
+    referrer: "youtube.com",
+    referrerFull: "https://youtube.com",
+    type: "Returning",
+    flagImage: "https://flagcdn.com/w40/in.png",
+  },
+];
+
+export const chartData = {
+  points: [
+    { x: 0, pv: 120, uv: 109 },
+    { x: 18.15, pv: 60, uv: 21 },
+    { x: 36.31, pv: 70, uv: 41 },
+    { x: 54.46, pv: 110, uv: 93 },
+    { x: 72.62, pv: 60, uv: 33 },
+    { x: 90.77, pv: 115, uv: 101 },
+    { x: 108.92, pv: 80, uv: 61 },
+    { x: 127.08, pv: 65, uv: 45 },
+    { x: 145.23, pv: 125, uv: 121 },
+    { x: 163.38, pv: 140, uv: 149 },
+    { x: 181.54, pv: 30, uv: 1 },
+    { x: 199.69, pv: 90, uv: 81 },
+    { x: 217.85, pv: 130, uv: 129 },
+  ],
+  maxValue: 150,
+};

@@ -1,0 +1,114 @@
+import { AnalyticsSummaryResponseDto } from "@/common/dtos/analytics.dto";
+
+interface StatsCardsProps {
+  summary?: AnalyticsSummaryResponseDto;
+}
+export default function StatsCards(props: StatsCardsProps) {
+  const { summary } = props;
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="flex flex-col justify-between rounded-lg p-5 bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark shadow-sm">
+        <div className="flex items-center gap-2 mb-1">
+          <span className="material-symbols-outlined text-primary text-xl">
+            ads_click
+          </span>
+          <p className="text-sm font-semibold text-subtext-light dark:text-subtext-dark">
+            Total Visits (PV)
+          </p>
+        </div>
+        <div className="flex items-baseline gap-2">
+          <p className="text-3xl font-bold leading-tight">
+            {summary?.pv.value.toLocaleString()}
+          </p>
+          <span className="text-xs font-medium text-primary bg-primary/10 px-1.5 py-0.5 rounded flex items-center gap-0.5">
+            <span className="material-symbols-outlined text-[12px]">
+              trending_up
+            </span>{" "}
+            {summary?.pv.change}%
+          </span>
+        </div>
+      </div>
+
+      <div className="flex flex-col justify-between rounded-lg p-5 bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark shadow-sm">
+        <div className="flex items-center gap-2 mb-1">
+          <span className="material-symbols-outlined text-primary text-xl">
+            person
+          </span>
+          <p className="text-sm font-semibold text-subtext-light dark:text-subtext-dark">
+            Unique Visitors (UV)
+          </p>
+        </div>
+        <div className="flex items-baseline gap-2">
+          <p className="text-3xl font-bold leading-tight">
+            {summary?.uv.value.toLocaleString()}
+          </p>
+          <span className="text-xs font-medium text-primary bg-primary/10 px-1.5 py-0.5 rounded flex items-center gap-0.5">
+            <span className="material-symbols-outlined text-[12px]">
+              trending_up
+            </span>{" "}
+            {summary?.uv.change}%
+          </span>
+        </div>
+      </div>
+
+      <div className="flex flex-col justify-between rounded-lg p-5 bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark shadow-sm justify-between">
+        <div className="flex items-center gap-2 mb-1">
+          <span className="material-symbols-outlined text-primary text-xl">
+            group_add
+          </span>
+          <p className="text-sm font-semibold text-subtext-light dark:text-subtext-dark">
+            New vs Returning
+          </p>
+        </div>
+        <div className="flex flex-col justify-between">
+          <div className="flex justify-between text-xs font-medium">
+            <span className="text-text-light dark:text-text-dark">
+              New: {summary?.newRate}%
+            </span>
+            <span className="text-subtext-light dark:text-subtext-dark">
+              Returning: {summary?.returnRate}%
+            </span>
+          </div>
+          <div className="flex w-full h-2 rounded-full overflow-hidden bg-background-light dark:bg-background-dark">
+            <div
+              className="bg-primary h-full"
+              style={{ width: `${summary?.newRate}%` }}
+            ></div>
+            <div
+              className="bg-primary-light/30 h-full"
+              style={{ width: `${summary?.returnRate}%` }}
+            ></div>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col justify-between rounded-lg p-5 bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark shadow-sm">
+        <div className="flex items-center gap-2 mb-1">
+          <span className="material-symbols-outlined text-primary text-xl">
+            public
+          </span>
+          <p className="text-sm font-semibold text-subtext-light dark:text-subtext-dark">
+            Top Country
+          </p>
+        </div>
+        <div className="flex items-center gap-3 mt-1">
+          {summary?.topCountry.flagImage && (
+            <img
+              alt={`${summary?.topCountry.name} Flag`}
+              className="rounded w-8 h-auto shadow-sm"
+              src={summary.topCountry.flagImage}
+            />
+          )}
+          <div>
+            <p className="text-xl font-bold leading-tight">
+              {summary?.topCountry.name}
+            </p>
+            <p className="text-xs text-subtext-light dark:text-subtext-dark">
+              {summary?.topCountry.percent}% of total traffic
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
