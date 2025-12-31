@@ -45,7 +45,7 @@ export default function LinksSection() {
   return (
     <div className="flex flex-col font-display border border-border-light rounded-xl bg-background-light text-[#1F2937] dark:bg-background-dark dark:text-gray-300">
       {/* Main Content */}
-      <div className="px-4 py-8 md:px-6 lg:px-8">
+      <div className="px-6 py-8">
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-4">
             {/* Top row: Title + Create Button */}
@@ -171,7 +171,7 @@ export default function LinksSection() {
                           </button>
                         </div>
                       </td>
-                      <td className="px-3 py-2 max-w-xs truncate text-gray-500 dark:text-gray-400">
+                      <td className="px-3 py-2 max-w-[200px] truncate text-gray-500 dark:text-gray-400">
                         {link.originalUrl}
                       </td>
                       <td className="px-3 py-2 whitespace-nowrap">

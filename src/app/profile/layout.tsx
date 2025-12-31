@@ -77,7 +77,7 @@ export default function ProfileLayout({
           </aside>
 
           {/* Content */}
-          <section className="flex-1">{children}</section>
+          <section className="flex-1 min-w-0">{children}</section>
         </div>
       </main>
     </div>
