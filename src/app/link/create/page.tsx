@@ -53,21 +53,21 @@ export default function CreateLinkPage() {
 
   return (
     <div className="flex h-screen w-full bg-background-light text-text-light-primary">
-      <main className="flex-1 overflow-y-auto p-6 md:p-12">
-        <div className="max-w-3xl mx-auto flex flex-col gap-8">
+      <main className="flex-1 overflow-y-auto p-[24px] md:p-[48px]">
+        <div className="max-w-[768px] mx-auto flex flex-col gap-[32px]">
           {/* HEADER */}
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-[8px]">
             <a
-              className="flex items-center gap-1 text-sm text-text-light-secondary hover:text-primary w-fit cursor-pointer"
+              className="flex items-center gap-[4px] text-[14px] text-text-light-secondary hover:text-primary w-fit cursor-pointer"
               href="/profile"
             >
-              <span className="material-symbols-outlined text-base">
+              <span className="material-symbols-outlined text-[16px]">
                 arrow_back
               </span>
               Back to Links
             </a>
 
-            <h1 className="text-3xl md:text-4xl font-black tracking-tight">
+            <h1 className="text-[30px] md:text-[36px] font-black tracking-tight">
               Create New Link
             </h1>
             <p className="text-text-light-secondary">
@@ -76,24 +76,24 @@ export default function CreateLinkPage() {
           </div>
 
           {/* CARD */}
-          <div className="rounded-xl border border-border-light bg-surface-light p-6 md:p-8 flex flex-col gap-8">
+          <div className="rounded-[12px] border border-border-light bg-surface-light p-[24px] md:p-[32px] flex flex-col gap-[32px]">
             {/* DESTINATION */}
-            <div className="flex flex-col gap-3">
-              <label className="text-sm font-bold uppercase tracking-wide">
+            <div className="flex flex-col gap-[12px]">
+              <label className="text-[14px] font-bold uppercase tracking-wide">
                 Destination URL
               </label>
 
-              <div className="flex rounded-lg border border-border-light overflow-hidden focus-within:ring-2 focus-within:ring-primary">
+              <div className="flex rounded-[8px] border border-border-light overflow-hidden focus-within:ring-2 focus-within:ring-primary">
                 <input
                   type="url"
                   value={originalUrl}
                   onChange={(e) => setOriginalUrl(e.target.value)}
                   placeholder="https://example.com/very-long-url"
-                  className="flex-1 h-14 px-4 bg-background-light outline-none text-base"
+                  className="flex-1 h-[56px] px-[16px] bg-background-light outline-none text-[16px]"
                 />
                 <button
                   type="button"
-                  className="px-4 bg-background-light text-text-light-secondary hover:text-primary"
+                  className="px-[16px] bg-background-light text-text-light-secondary hover:text-primary"
                   onClick={() =>
                     navigator.clipboard.readText().then(setOriginalUrl)
                   }
@@ -114,21 +114,21 @@ export default function CreateLinkPage() {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="My Super Grenade"
-                className="w-full h-12 rounded-lg border border-border-light px-4 bg-background-light"
+                className="w-full h-[48px] rounded-[8px] border border-border-light px-[16px] bg-background-light"
               />
             </Accordion>
 
             {/* CUSTOM ALIAS */}
             <Accordion icon="edit" title="Custom Alias">
-              <p className="text-xs text-text-light-secondary mb-4">
+              <p className="text-[12px] text-text-light-secondary mb-[16px]">
                 Customize the back-half of your link.
               </p>
 
-              <div className="flex gap-4">
+              <div className="flex gap-[16px]">
                 <select
                   value={domain}
                   onChange={(e) => setDomain(e.target.value)}
-                  className="h-12 rounded-lg border border-border-light px-4 bg-background-light"
+                  className="h-[48px] rounded-[8px] border border-border-light px-[16px] bg-background-light"
                 >
                   <option>traceurl.p-e.kr</option>
                   <option>localhost:8080</option>
@@ -163,7 +163,7 @@ export default function CreateLinkPage() {
                     isCustom ? "super-grenade" : "Disabled in Non-Custom mode"
                   }
                   disabled={!isCustom}
-                  className={`flex-1 h-12 rounded-lg border border-border-light px-4 bg-background-light ${
+                  className={`flex-1 h-[48px] rounded-[8px] border border-border-light px-[16px] bg-background-light ${
                     !isCustom ? "cursor-not-allowed opacity-50" : ""
                   }`}
                 />
@@ -179,15 +179,15 @@ export default function CreateLinkPage() {
                 onChange={(e) =>
                   setExpireDate(new Date(e.target.value).toISOString())
                 }
-                className="h-12 rounded-lg border border-border-light px-4 bg-background-light"
+                className="h-[48px] rounded-[8px] border border-border-light px-[16px] bg-background-light"
               />
             </Accordion>
           </div>
 
           {/* ACTIONS */}
-          <div className="flex flex-col-reverse md:flex-row justify-end gap-4 pb-10">
+          <div className="flex flex-col-reverse md:flex-row justify-end gap-[16px] pb-[40px]">
             <button
-              className="px-8 py-3 rounded-lg text-sm hover:bg-black/5"
+              className="px-[32px] py-[12px] rounded-[8px] text-[14px] hover:bg-black/5"
               onClick={() => {
                 router.back();
               }}
@@ -196,7 +196,7 @@ export default function CreateLinkPage() {
             </button>
             <button
               onClick={handleCreate}
-              className="px-8 py-3 rounded-lg bg-primary font-bold shadow-lg shadow-primary/20 hover:shadow-primary/40 flex items-center gap-2"
+              className="px-[32px] py-[12px] rounded-[8px] bg-primary font-bold shadow-lg shadow-primary/20 hover:shadow-primary/40 flex items-center gap-[8px]"
             >
               <span className="material-symbols-outlined text-[20px]">
                 auto_fix_high

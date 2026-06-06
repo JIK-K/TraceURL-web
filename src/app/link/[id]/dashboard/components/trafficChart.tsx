@@ -72,31 +72,31 @@ export default function TrafficChart(props: TrafficChartProps) {
   };
 
   if (!data)
-    return <div className="h-[300px] animate-pulse bg-gray-100 rounded-lg" />;
+    return <div className="h-[300px] animate-pulse bg-gray-100 rounded-[8px]" />;
 
   return (
-    <div className="flex flex-col gap-4 rounded-lg border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-6 shadow-sm">
+    <div className="flex flex-col gap-[16px] rounded-[8px] border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-[24px] shadow-sm">
       {/* 상단 헤더 부분 생략 (기존 코드와 동일) */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-[16px]">
         <div className="flex flex-col">
-          <h3 className="text-lg font-bold leading-normal">Traffic Overview</h3>
-          <div className="flex gap-4 text-xs font-medium mt-1">
-            <div className="flex items-center gap-2 text-text-light dark:text-text-dark">
-              <span className="w-2 h-2 rounded-full bg-primary"></span> Unique
+          <h3 className="text-[18px] font-bold leading-normal">Traffic Overview</h3>
+          <div className="flex gap-[16px] text-[12px] font-medium mt-[4px]">
+            <div className="flex items-center gap-[8px] text-text-light dark:text-text-dark">
+              <span className="w-[8px] h-[8px] rounded-[9999px] bg-primary"></span> Unique
               (UV)
             </div>
-            <div className="flex items-center gap-2 text-subtext-light dark:text-subtext-dark">
-              <span className="w-2 h-2 rounded-full bg-primary-light/40 border border-primary/40"></span>{" "}
+            <div className="flex items-center gap-[8px] text-subtext-light dark:text-subtext-dark">
+              <span className="w-[8px] h-[8px] rounded-[9999px] bg-primary-light/40 border border-primary/40"></span>{" "}
               Visits (PV)
             </div>
           </div>
         </div>
 
-        <div className="flex h-9 w-full sm:w-auto items-center justify-center rounded-lg bg-background-light dark:bg-background-dark p-1 border border-border-light dark:border-border-dark">
+        <div className="flex h-[36px] w-full sm:w-auto items-center justify-center rounded-[8px] bg-background-light dark:bg-background-dark p-[4px] border border-border-light dark:border-border-dark">
           {ranges.map((r) => (
             <label
               key={r.value}
-              className={`flex cursor-pointer h-full grow items-center justify-center rounded px-3 text-xs transition-all ${
+              className={`flex cursor-pointer h-full grow items-center justify-center rounded-[4px] px-[12px] text-[12px] transition-all ${
                 selectedRange === r.value
                   ? "bg-card-light dark:bg-card-dark shadow-sm text-primary font-semibold"
                   : "text-subtext-light"
@@ -116,18 +116,18 @@ export default function TrafficChart(props: TrafficChartProps) {
         </div>
       </div>
 
-      <div className="flex min-h-[250px] flex-1 flex-col py-4 relative group">
+      <div className="flex min-h-[250px] flex-1 flex-col py-[16px] relative group">
         {/* 툴팁: activePoint가 있을 때만 렌더링 */}
         {activePoint && (
           <div
-            className="absolute pointer-events-none z-50 bg-text-light dark:bg-text-dark text-card-light dark:text-card-dark text-[10px] p-2 rounded shadow-xl flex flex-col gap-1 min-w-[90px]"
+            className="absolute pointer-events-none z-50 bg-text-light dark:bg-text-dark text-card-light dark:text-card-dark text-[10px] p-[8px] rounded-[4px] shadow-xl flex flex-col gap-[4px] min-w-[90px]"
             style={{
               left: `${(activePoint.x / 472) * 100}%`,
               top: "0px",
               transform: "translateX(-50%)",
             }}
           >
-            <p className="font-bold border-b border-white/10 pb-1 mb-1">
+            <p className="font-bold border-b border-white/10 pb-[4px] mb-[4px]">
               {activePoint.label}
             </p>
             <p className="flex justify-between">

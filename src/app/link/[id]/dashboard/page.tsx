@@ -94,35 +94,35 @@ export default function DashboardPage() {
   };
   return (
     <>
-      <header className="flex flex-col items-start justify-center whitespace-nowrap border-b border-border-light dark:border-border-dark px-2 sm:px-4 py-4 mb-6">
-        <div className="flex w-full items-center justify-between mb-4">
+      <header className="flex flex-col items-start justify-center whitespace-nowrap border-b border-border-light dark:border-border-dark px-[8px] sm:px-[16px] py-[16px] mb-[24px]">
+        <div className="flex w-full items-center justify-between mb-[16px]">
           <button
-            className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-primary transition-colors dark:text-gray-400 dark:hover:text-primary"
+            className="inline-flex items-center text-[14px] font-medium text-gray-500 hover:text-primary transition-colors dark:text-gray-400 dark:hover:text-primary"
             onClick={() => router.push("/profile/links")}
           >
-            <span className="material-symbols-outlined mr-1 text-lg">
+            <span className="material-symbols-outlined mr-[4px] text-[18px]">
               arrow_back
             </span>
             Back to Your Links
           </button>
         </div>
-        <div className="flex items-center gap-4 text-text-light dark:text-text-dark">
-          <div className="bg-primary/10 rounded-lg">
-            <span className="p-2 material-symbols-outlined text-primary text-3xl">
+        <div className="flex items-center gap-[16px] text-text-light dark:text-text-dark">
+          <div className="bg-primary/10 rounded-[8px]">
+            <span className="p-[8px] material-symbols-outlined text-primary text-[30px]">
               analytics
             </span>
           </div>
           <div>
-            <h1 className="text-xl font-bold leading-tight tracking-tight">
+            <h1 className="text-[20px] font-bold leading-tight tracking-tight">
               Analytics Dashboard
             </h1>
-            <p className="text-xs text-subtext-light dark:text-subtext-dark font-medium">
+            <p className="text-[12px] text-subtext-light dark:text-subtext-dark font-medium">
               Tracking & Performance
             </p>
           </div>
         </div>
       </header>
-      <main className="flex flex-col gap-6">
+      <main className="flex flex-col gap-[24px]">
         <StatsCards summary={summary} />
         <TrafficChart
           data={chartData}
@@ -130,12 +130,12 @@ export default function DashboardPage() {
           onRangeChange={setSelectedRange}
           isLoading={isChartLoading}
         />
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-[24px]">
           <DeviceBreakdown devices={detail?.devices} />
           <PlatformBreakdown platforms={detail?.platforms} />
           <TopBrowsers browsers={detail?.browsers} />
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-[24px]">
           <VisitsByLocation countries={detail?.countries} />
           <TopReferrers referrers={detail?.referrers} />
         </div>

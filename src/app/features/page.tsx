@@ -3,13 +3,13 @@ export default function FeaturesPage() {
     <div className="bg-background-light dark:bg-background-dark font-display min-h-screen flex flex-col">
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="py-8 sm:py-10">
-          <div className="container mx-auto px-4">
-            <div className="mx-auto max-w-4xl text-center">
-              <h1 className="text-4xl font-black tracking-tighter text-text-light-primary dark:text-text-dark-primary sm:text-5xl md:text-6xl">
+        <section className="py-[32px] sm:py-[40px]">
+          <div className="container mx-auto px-[16px]">
+            <div className="mx-auto max-w-[896px] text-center">
+              <h1 className="text-[36px] font-black tracking-tighter text-text-light-primary dark:text-text-dark-primary sm:text-[48px] md:text-[60px]">
                 Powerful Features, Built for You
               </h1>
-              <p className="mx-auto mt-4 max-w-2xl text-lg text-text-light-secondary dark:text-text-dark-secondary md:text-xl">
+              <p className="mx-auto mt-[16px] max-w-[672px] text-[18px] text-text-light-secondary dark:text-text-dark-secondary md:text-[20px]">
                 우리의 URL 단축기는 단순히 링크를 줄여주는 도구가 아닙니다.
                 <br />
                 정교한 분석부터 맞춤 브랜딩까지, 필요한 모든 기능을 제공합니다.
@@ -19,21 +19,21 @@ export default function FeaturesPage() {
         </section>
 
         {/* Features Grid */}
-        <section className="pb-8 sm:pb-10">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <section className="pb-[32px] sm:pb-[40px]">
+          <div className="container mx-auto px-[16px]">
+            <div className="grid grid-cols-1 gap-[32px] md:grid-cols-2 lg:grid-cols-3">
               {features.map((item, idx) => (
                 <div
                   key={idx}
-                  className="flex flex-col gap-4 rounded-xl border border-border-light bg-surface-light p-6 transition-shadow hover:shadow-lg dark:border-border-dark dark:bg-surface-dark"
+                  className="flex flex-col gap-[16px] rounded-[12px] border border-border-light bg-surface-light p-[24px] transition-shadow hover:shadow-lg dark:border-border-dark dark:bg-surface-dark"
                 >
-                  <div className="flex size-12 items-center justify-center rounded-lg bg-emerald-100 text-primary dark:bg-surface-dark dark:border dark:border-border-dark">
-                    <span className="material-symbols-outlined !text-3xl">
+                  <div className="flex size-12 items-center justify-center rounded-[8px] bg-emerald-100 text-primary dark:bg-surface-dark dark:border dark:border-border-dark">
+                    <span className="material-symbols-outlined !text-[30px]">
                       {item.icon}
                     </span>
                   </div>
-                  <div className="flex flex-col gap-1">
-                    <h3 className="text-xl font-bold text-text-light-primary dark:text-text-dark-primary">
+                  <div className="flex flex-col gap-[4px]">
+                    <h3 className="text-[20px] font-bold text-text-light-primary dark:text-text-dark-primary">
                       {item.title}
                     </h3>
                     <p className="text-text-light-secondary dark:text-text-dark-secondary">
@@ -47,20 +47,20 @@ export default function FeaturesPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-8 sm:py-10">
-          <div className="container mx-auto px-4 bg-brand">
-            <div className="mx-auto max-w-4xl rounded-xl  p-10 text-center dark:bg-surface-dark">
-              <div className="flex flex-col items-center gap-6">
-                <h2 className="text-3xl font-bold tracking-tight text-text-light-primary dark:text-text-dark-primary sm:text-4xl">
+        <section className="py-[32px] sm:py-[40px]">
+          <div className="container mx-auto px-[16px] bg-brand">
+            <div className="mx-auto max-w-[896px] rounded-[12px]  p-[40px] text-center dark:bg-surface-dark">
+              <div className="flex flex-col items-center gap-[24px]">
+                <h2 className="text-[30px] font-bold tracking-tight text-text-light-primary dark:text-text-dark-primary sm:text-[36px]">
                   Ready to Elevate Your Links?
                 </h2>
-                <p className="text-lg text-text-light-secondary dark:text-text-dark-secondary">
+                <p className="text-[18px] text-text-light-secondary dark:text-text-dark-secondary">
                   수많은 사용자가 Shortify를 믿고 강력하고 추적 가능한 링크를
                   만들고 있습니다.
                   <br />
                   지금 무료로 시작해보세요.
                 </p>
-                <button className="flex h-12 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary px-6 text-base font-bold text-white hover:opacity-90">
+                <button className="flex h-[48px] min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-[8px] bg-primary px-[24px] text-[16px] font-bold text-white hover:opacity-90">
                   <span className="truncate">Create a Free Account</span>
                 </button>
               </div>

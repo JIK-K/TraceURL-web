@@ -32,13 +32,13 @@ export default function DeviceBreakdown({
   const mobileData = devices.find((d) => d.label === "Mobile") || devices[0];
 
   return (
-    <div className="flex flex-col gap-4 rounded-lg border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-6">
-      <h3 className="text-lg font-semibold leading-normal">Device Breakdown</h3>
+    <div className="flex flex-col gap-[16px] rounded-[8px] border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-[24px]">
+      <h3 className="text-[18px] font-semibold leading-normal">Device Breakdown</h3>
 
-      <div className="flex items-center justify-center py-4 relative">
+      <div className="flex items-center justify-center py-[16px] relative">
         {/* 도넛 차트 바깥 원 */}
         <div
-          className="relative size-40 rounded-full"
+          className="relative size-40 rounded-[9999px]"
           style={{
             background:
               devices.length > 0
@@ -49,11 +49,11 @@ export default function DeviceBreakdown({
 
         {/* 중앙 구멍 (Donut Hole) */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="size-28 rounded-full bg-card-light dark:bg-card-dark flex flex-col items-center justify-center">
-            <span className="text-2xl font-bold">
+          <div className="size-28 rounded-[9999px] bg-card-light dark:bg-card-dark flex flex-col items-center justify-center">
+            <span className="text-[24px] font-bold">
               {mobileData?.percentage || 0}%
             </span>
-            <span className="text-xs text-subtext-light dark:text-subtext-dark">
+            <span className="text-[12px] text-subtext-light dark:text-subtext-dark">
               {mobileData?.label || "Devices"}
             </span>
           </div>
@@ -61,15 +61,15 @@ export default function DeviceBreakdown({
       </div>
 
       {/* 범례 리스트 */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-[8px]">
         {devices.map((device, index) => (
           <div
             key={device.label}
-            className="flex items-center justify-between text-sm"
+            className="flex items-center justify-between text-[14px]"
           >
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-[8px]">
               <div
-                className={`size-3 rounded-full ${
+                className={`size-3 rounded-[9999px] ${
                   tailwindColors[index] || "bg-gray-200"
                 }`}
               ></div>

@@ -189,58 +189,58 @@ export default function EditLinkPage() {
 
   return (
     <div className="relative flex min-h-screen w-full flex-col font-display bg-background-light dark:bg-background-dark text-[#1F2937] dark:text-gray-300">
-      <main className="flex-1 px-4 py-8 md:px-6 lg:px-8">
-        <div className="mx-auto max-w-3xl">
-          <div className="mb-6">
+      <main className="flex-1 px-[16px] py-[32px] md:px-[24px] lg:px-[32px]">
+        <div className="mx-auto max-w-[768px]">
+          <div className="mb-[24px]">
             <button
-              className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-primary transition-colors dark:text-gray-400 dark:hover:text-primary"
+              className="inline-flex items-center text-[14px] font-medium text-gray-500 hover:text-primary transition-colors dark:text-gray-400 dark:hover:text-primary"
               onClick={() => router.push("/profile/links")}
             >
-              <span className="material-symbols-outlined mr-1 text-lg">
+              <span className="material-symbols-outlined mr-[4px] text-[18px]">
                 arrow_back
               </span>
               Back to Your Links
             </button>
           </div>
 
-          <div className="mb-8 flex items-start justify-between">
+          <div className="mb-[32px] flex items-start justify-between">
             <div>
-              <h1 className="text-3xl font-black tracking-tighter text-gray-900 dark:text-white">
+              <h1 className="text-[30px] font-black tracking-tighter text-gray-900 dark:text-white">
                 Edit Link
               </h1>
-              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+              <p className="mt-[8px] text-[14px] text-gray-500 dark:text-gray-400">
                 Update configuration and settings for this shortened URL.
               </p>
             </div>
             <button
-              className="flex items-center gap-2 rounded-lg border border-red-200 px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 dark:border-red-900/50 dark:text-red-400 dark:hover:bg-red-900/20 transition-colors cursor-pointer"
+              className="flex items-center gap-[8px] rounded-[8px] border border-red-200 px-[12px] py-[8px] text-[14px] font-medium text-red-600 hover:bg-red-50 dark:border-red-900/50 dark:text-red-400 dark:hover:bg-red-900/20 transition-colors cursor-pointer"
               onClick={handleDelete}
             >
-              <span className="material-symbols-outlined text-lg">delete</span>
+              <span className="material-symbols-outlined text-[18px]">delete</span>
               Delete
             </button>
           </div>
 
-          <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
-            <div className="border-b border-gray-200 bg-gray-50/50 px-6 py-4 dark:border-gray-800 dark:bg-gray-800/50">
+          <div className="overflow-hidden rounded-[12px] border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+            <div className="border-b border-gray-200 bg-gray-50/50 px-[24px] py-[16px] dark:border-gray-800 dark:bg-gray-800/50">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-100 dark:bg-green-900/30">
+                <div className="flex items-center gap-[12px]">
+                  <div className="flex h-[40px] w-[40px] items-center justify-center rounded-[8px] bg-green-100 dark:bg-green-900/30">
                     <span className="material-symbols-outlined text-primary">
                       link
                     </span>
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-gray-900 dark:text-white">
+                    <h3 className="text-[14px] font-bold text-gray-900 dark:text-white">
                       {process.env.NEXT_PUBLIC_SERVER_URL}/{data?.shortCode}
                     </h3>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                    <p className="text-[12px] text-gray-500 dark:text-gray-400">
                       Created on {formatToMonthDayYear(data?.createdAt)}
                     </p>
                   </div>
                 </div>
                 <span
-                  className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${badge.className} cursor-pointer`}
+                  className={`inline-flex items-center rounded-[9999px] px-[10px] py-[2px] text-[12px] font-medium ${badge.className} cursor-pointer`}
                   onClick={handleStatusChange}
                 >
                   {badge.label}
@@ -248,16 +248,16 @@ export default function EditLinkPage() {
               </div>
             </div>
 
-            <form className="p-6 md:p-8 space-y-6">
+            <form className="p-[24px] md:p-[32px] space-y-6">
               <div>
                 <label
-                  className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+                  className="mb-[8px] block text-[14px] font-medium text-gray-900 dark:text-white"
                   htmlFor="title"
                 >
                   Link Title
                 </label>
                 <input
-                  className="block w-full rounded-lg border-gray-300 bg-white px-4 py-2.5 text-gray-900 shadow-sm focus:border-primary focus:ring-primary dark:border-gray-700 dark:bg-gray-800 dark:text-white sm:text-sm"
+                  className="block w-full rounded-[8px] border-gray-300 bg-white px-[16px] py-[10px] text-gray-900 shadow-sm focus:border-primary focus:ring-primary dark:border-gray-700 dark:bg-gray-800 dark:text-white sm:text-[14px]"
                   id="title"
                   name="title"
                   placeholder="e.g. Summer Sale 2024"
@@ -265,7 +265,7 @@ export default function EditLinkPage() {
                   defaultValue={data?.title}
                   onChange={(e) => setData({ ...data!, title: e.target.value })}
                 />
-                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                <p className="mt-[4px] text-[12px] text-gray-500 dark:text-gray-400">
                   A descriptive title to help you identify this link in your
                   dashboard.
                 </p>
@@ -273,38 +273,38 @@ export default function EditLinkPage() {
 
               <div>
                 <label
-                  className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+                  className="mb-[8px] block text-[14px] font-medium text-gray-900 dark:text-white"
                   htmlFor="original_url"
                 >
                   Destination URL
                 </label>
-                <div className="relative rounded-md shadow-sm">
+                <div className="relative rounded-[6px] shadow-sm">
                   <input
-                    className="block w-full rounded-lg border-gray-200 bg-gray-50 px-4 py-2.5 text-gray-500 shadow-sm focus:border-gray-200 focus:ring-0 dark:border-gray-800 dark:bg-gray-800/50 dark:text-gray-400 sm:text-sm cursor-not-allowed"
+                    className="block w-full rounded-[8px] border-gray-200 bg-gray-50 px-[16px] py-[10px] text-gray-500 shadow-sm focus:border-gray-200 focus:ring-0 dark:border-gray-800 dark:bg-gray-800/50 dark:text-gray-400 sm:text-[14px] cursor-not-allowed"
                     id="original_url"
                     name="original_url"
                     readOnly
                     type="text"
                     defaultValue={data?.originalUrl}
                   />
-                  <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-                    <span className="material-symbols-outlined text-gray-400 text-lg">
+                  <div className="absolute inset-y-0 right-[0px] flex items-center pr-[12px]">
+                    <span className="material-symbols-outlined text-gray-400 text-[18px]">
                       lock
                     </span>
                   </div>
                 </div>
               </div>
 
-              <div className="w-1/2">
+              <div className="w-[4px]/2">
                 <div>
                   <label
-                    className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+                    className="mb-[8px] block text-[14px] font-medium text-gray-900 dark:text-white"
                     htmlFor="expire_at"
                   >
                     Expiration Date
                   </label>
                   <input
-                    className="block w-full rounded-lg border-gray-300 bg-white px-4 py-2.5 text-gray-900 shadow-sm focus:border-primary focus:ring-primary dark:border-gray-700 dark:bg-gray-800 dark:text-white sm:text-sm appearance-none"
+                    className="block w-full rounded-[8px] border-gray-300 bg-white px-[16px] py-[10px] text-gray-900 shadow-sm focus:border-primary focus:ring-primary dark:border-gray-700 dark:bg-gray-800 dark:text-white sm:text-[14px] appearance-none"
                     id="expire_at"
                     name="expire_at"
                     type="datetime-local"
@@ -318,19 +318,19 @@ export default function EditLinkPage() {
                       })
                     }
                   />
-                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  <p className="mt-[4px] text-[12px] text-gray-500 dark:text-gray-400">
                     Link redirects will be disabled after this time.
                   </p>
                 </div>
               </div>
 
-              <div className="rounded-lg border border-gray-200 bg-gray-50/50 p-4 dark:border-gray-700 dark:bg-gray-800/50">
+              <div className="rounded-[8px] border border-gray-200 bg-gray-50/50 p-[16px] dark:border-gray-700 dark:bg-gray-800/50">
                 <div className="flex items-center justify-between">
                   <div className="flex flex-col">
-                    <span className="text-sm font-medium text-gray-900 dark:text-white">
+                    <span className="text-[14px] font-medium text-gray-900 dark:text-white">
                       Auto Delete
                     </span>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                    <span className="text-[12px] text-gray-500 dark:text-gray-400">
                       Permanently delete this link once it expires.
                     </span>
                   </div>
@@ -346,24 +346,24 @@ export default function EditLinkPage() {
                         })
                       }
                     />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-900 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+                    <div className="w-[44px] h-[24px] bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-900 rounded-[9999px] peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-[9999px] after:h-[20px] after:w-[20px] after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
                   </label>
                 </div>
               </div>
 
-              <div className="rounded-lg border border-gray-200 bg-gray-50/50 p-4 dark:border-gray-700 dark:bg-gray-800/50">
+              <div className="rounded-[8px] border border-gray-200 bg-gray-50/50 p-[16px] dark:border-gray-700 dark:bg-gray-800/50">
                 <div className="flex items-center justify-between">
                   <div className="flex flex-col">
-                    <span className="text-sm font-medium text-gray-900 dark:text-white">
+                    <span className="text-[14px] font-medium text-gray-900 dark:text-white">
                       QR Code Generation
                     </span>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                    <span className="text-[12px] text-gray-500 dark:text-gray-400">
                       Get a scannable QR code for your link to use in physical
                       marking campaigns
                     </span>
                   </div>
                   <button
-                    className="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 cursor-pointer"
+                    className="flex items-center gap-[8px] rounded-[8px] border border-gray-300 bg-white px-[16px] py-[8px] text-[14px] font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 cursor-pointer"
                     type="button"
                     onClick={handleDownloadQrCode}
                   >
@@ -375,26 +375,26 @@ export default function EditLinkPage() {
                 </div>
               </div>
 
-              <div className="rounded-lg border border-gray-200 bg-gray-50/50 p-4 dark:border-gray-700 dark:bg-gray-800/50">
-                <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div className="flex items-center gap-4">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-red-100 dark:bg-red-900/30">
+              <div className="rounded-[8px] border border-gray-200 bg-gray-50/50 p-[16px] dark:border-gray-700 dark:bg-gray-800/50">
+                <div className="mb-[16px] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-[16px]">
+                  <div className="flex items-center gap-[16px]">
+                    <div className="flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-[8px] bg-red-100 dark:bg-red-900/30">
                       <span className="material-symbols-outlined text-red-600 dark:text-red-400">
                         block
                       </span>
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-sm font-medium text-gray-900 dark:text-white">
+                      <span className="text-[14px] font-medium text-gray-900 dark:text-white">
                         IP BlockList
                       </span>
-                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                      <span className="text-[12px] text-gray-500 dark:text-gray-400">
                         Block traffic from specific IP addresses.
                       </span>
                     </div>
                   </div>
                   <button
                     type="button"
-                    className="group flex shrink-0 items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 hover:text-primary hover:border-primary transition-all dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-primary dark:hover:border-primary"
+                    className="group flex shrink-0 items-center gap-[8px] rounded-[8px] border border-gray-300 bg-white px-[16px] py-[8px] text-[14px] font-medium text-gray-700 shadow-sm hover:bg-gray-50 hover:text-primary hover:border-primary transition-all dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-primary dark:hover:border-primary"
                     onClick={() => setIsOpen(true)}
                   >
                     <span className="material-symbols-outlined text-[20px] text-gray-500 group-hover:text-primary dark:text-gray-400">
@@ -404,14 +404,14 @@ export default function EditLinkPage() {
                   </button>
                 </div>
 
-                <div className="overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+                <div className="overflow-hidden rounded-[8px] border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
                   <ul
                     className="divide-y divide-gray-200 dark:divide-gray-800"
                     role="list"
                   >
                     {ipBlockList.length === 0 ? (
-                      <li className="px-4 py-3">
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <li className="px-[16px] py-[12px]">
+                        <p className="text-[14px] text-gray-500 dark:text-gray-400">
                           {" "}
                           No IP blocks have been added yet.
                         </p>
@@ -432,16 +432,16 @@ export default function EditLinkPage() {
               </div>
             </form>
 
-            <div className="flex items-center justify-end gap-3 border-t border-gray-200 bg-gray-50 px-6 py-4 dark:border-gray-800 dark:bg-gray-900/50">
+            <div className="flex items-center justify-end gap-[12px] border-t border-gray-200 bg-gray-50 px-[24px] py-[16px] dark:border-gray-800 dark:bg-gray-900/50">
               <button
-                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 cursor-pointer"
+                className="rounded-[8px] border border-gray-300 bg-white px-[16px] py-[8px] text-[14px] font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 cursor-pointer"
                 type="button"
                 onClick={() => router.push("/profile/links")}
               >
                 Cancel
               </button>
               <button
-                className="rounded-lg border border-transparent bg-primary px-4 py-2 text-sm font-bold text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 cursor-pointer"
+                className="rounded-[8px] border border-transparent bg-primary px-[16px] py-[8px] text-[14px] font-bold text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 cursor-pointer"
                 type="submit"
                 onClick={handleEditSave}
               >

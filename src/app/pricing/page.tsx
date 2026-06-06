@@ -4,13 +4,13 @@ export default function PricingPage() {
       {/* MAIN */}
       <main className="flex-grow">
         {/* PRICING SECTION */}
-        <section className="py-16 sm:py-24">
-          <div className="container mx-auto px-4">
-            <div className="mx-auto max-w-3xl text-center">
-              <h1 className="text-4xl font-black tracking-tighter text-text-light-primary dark:text-text-dark-primary sm:text-5xl md:text-6xl">
+        <section className="py-[64px] sm:py-[96px]">
+          <div className="container mx-auto px-[16px]">
+            <div className="mx-auto max-w-[768px] text-center">
+              <h1 className="text-[36px] font-black tracking-tighter text-text-light-primary dark:text-text-dark-primary sm:text-[48px] md:text-[60px]">
                 Find the perfect plan
               </h1>
-              <p className="mx-auto mt-4 max-w-2xl text-lg text-text-light-secondary dark:text-text-dark-secondary md:text-xl">
+              <p className="mx-auto mt-[16px] max-w-[672px] text-[18px] text-text-light-secondary dark:text-text-dark-secondary md:text-[20px]">
                 간단하고 명확한 요금제. 어떤 숨겨진 비용도 없습니다. <br />
                 당신의 사용 방식에 가장 최적화된 플랜을 선택하고 링크 활용을 한
                 단계 끌어올리세요.
@@ -18,33 +18,33 @@ export default function PricingPage() {
             </div>
 
             {/* PRICING CARDS */}
-            <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-3">
+            <div className="mt-[48px] grid grid-cols-1 gap-[32px] lg:grid-cols-3">
               {/* FREE */}
-              <div className="flex flex-col rounded-xl border border-border-light bg-surface-light p-8 dark:border-border-dark dark:bg-surface-dark">
+              <div className="flex flex-col rounded-[12px] border border-border-light bg-surface-light p-[32px] dark:border-border-dark dark:bg-surface-dark">
                 <div className="flex-grow">
-                  <h3 className="text-xl font-bold text-text-light-primary dark:text-text-dark-primary">
+                  <h3 className="text-[20px] font-bold text-text-light-primary dark:text-text-dark-primary">
                     Free
                   </h3>
-                  <p className="mt-2 text-text-light-secondary dark:text-text-dark-secondary">
+                  <p className="mt-[8px] text-text-light-secondary dark:text-text-dark-secondary">
                     For individuals getting started.
                   </p>
 
-                  <div className="mt-6">
-                    <span className="text-4xl font-black text-text-light-primary dark:text-text-dark-primary">
+                  <div className="mt-[24px]">
+                    <span className="text-[36px] font-black text-text-light-primary dark:text-text-dark-primary">
                       $0
                     </span>
-                    <span className="ml-1 text-lg font-medium text-text-light-secondary dark:text-text-dark-secondary">
+                    <span className="ml-[4px] text-[18px] font-medium text-text-light-secondary dark:text-text-dark-secondary">
                       / month
                     </span>
                   </div>
 
-                  <ul className="mt-6 space-y-4">
+                  <ul className="mt-[24px] space-y-4">
                     {[
                       "100 links/month",
                       "Basic Analytics",
                       "QR Code Generation",
                     ].map((item) => (
-                      <li key={item} className="flex items-center gap-3">
+                      <li key={item} className="flex items-center gap-[12px]">
                         <span className="material-symbols-outlined text-primary">
                           check_circle
                         </span>
@@ -56,44 +56,44 @@ export default function PricingPage() {
                   </ul>
                 </div>
 
-                <button className="mt-8 flex h-12 w-full cursor-pointer items-center justify-center rounded-lg bg-emerald-50 px-6 text-base font-bold text-text-light-primary hover:bg-emerald-100 dark:bg-surface-dark dark:text-text-dark-primary dark:hover:bg-border-dark">
+                <button className="mt-[32px] flex h-[48px] w-full cursor-pointer items-center justify-center rounded-[8px] bg-emerald-50 px-[24px] text-[16px] font-bold text-text-light-primary hover:bg-emerald-100 dark:bg-surface-dark dark:text-text-dark-primary dark:hover:bg-border-dark">
                   Get Started
                 </button>
               </div>
 
               {/* PRO */}
-              <div className="relative flex flex-col rounded-xl border-2 border-primary bg-surface-light p-8 dark:bg-surface-dark">
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-                  <span className="rounded-full bg-primary px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white">
+              <div className="relative flex flex-col rounded-[12px] border-[2px] border-primary bg-surface-light p-[32px] dark:bg-surface-dark">
+                <div className="absolute -top-[14px] left-[4px]/2 -translate-x-1/2">
+                  <span className="rounded-[9999px] bg-primary px-[12px] py-[4px] text-[12px] font-semibold uppercase tracking-wider text-white">
                     Most Popular
                   </span>
                 </div>
 
                 <div className="flex-grow">
-                  <h3 className="text-xl font-bold text-text-light-primary dark:text-text-dark-primary">
+                  <h3 className="text-[20px] font-bold text-text-light-primary dark:text-text-dark-primary">
                     Pro
                   </h3>
-                  <p className="mt-2 text-text-light-secondary dark:text-text-dark-secondary">
+                  <p className="mt-[8px] text-text-light-secondary dark:text-text-dark-secondary">
                     For power users and small businesses.
                   </p>
 
-                  <div className="mt-6">
-                    <span className="text-4xl font-black text-text-light-primary dark:text-text-dark-primary">
+                  <div className="mt-[24px]">
+                    <span className="text-[36px] font-black text-text-light-primary dark:text-text-dark-primary">
                       $19
                     </span>
-                    <span className="ml-1 text-lg font-medium text-text-light-secondary dark:text-text-dark-secondary">
+                    <span className="ml-[4px] text-[18px] font-medium text-text-light-secondary dark:text-text-dark-secondary">
                       / month
                     </span>
                   </div>
 
-                  <ul className="mt-6 space-y-4">
+                  <ul className="mt-[24px] space-y-4">
                     {[
                       "1,000 links/month",
                       "Advanced Analytics",
                       "Custom Domains",
                       "Email Support",
                     ].map((item) => (
-                      <li key={item} className="flex items-center gap-3">
+                      <li key={item} className="flex items-center gap-[12px]">
                         <span className="material-symbols-outlined text-primary">
                           check_circle
                         </span>
@@ -105,38 +105,38 @@ export default function PricingPage() {
                   </ul>
                 </div>
 
-                <button className="mt-8 flex h-12 w-full cursor-pointer items-center justify-center rounded-lg bg-primary px-6 text-base font-bold text-white hover:opacity-90">
+                <button className="mt-[32px] flex h-[48px] w-full cursor-pointer items-center justify-center rounded-[8px] bg-primary px-[24px] text-[16px] font-bold text-white hover:opacity-90">
                   Choose Pro
                 </button>
               </div>
 
               {/* BUSINESS */}
-              <div className="flex flex-col rounded-xl border border-border-light bg-surface-light p-8 dark:border-border-dark dark:bg-surface-dark">
+              <div className="flex flex-col rounded-[12px] border border-border-light bg-surface-light p-[32px] dark:border-border-dark dark:bg-surface-dark">
                 <div className="flex-grow">
-                  <h3 className="text-xl font-bold text-text-light-primary dark:text-text-dark-primary">
+                  <h3 className="text-[20px] font-bold text-text-light-primary dark:text-text-dark-primary">
                     Business
                   </h3>
-                  <p className="mt-2 text-text-light-secondary dark:text-text-dark-secondary">
+                  <p className="mt-[8px] text-text-light-secondary dark:text-text-dark-secondary">
                     For teams and larger companies.
                   </p>
 
-                  <div className="mt-6">
-                    <span className="text-4xl font-black text-text-light-primary dark:text-text-dark-primary">
+                  <div className="mt-[24px]">
+                    <span className="text-[36px] font-black text-text-light-primary dark:text-text-dark-primary">
                       $49
                     </span>
-                    <span className="ml-1 text-lg font-medium text-text-light-secondary dark:text-text-dark-secondary">
+                    <span className="ml-[4px] text-[18px] font-medium text-text-light-secondary dark:text-text-dark-secondary">
                       / month
                     </span>
                   </div>
 
-                  <ul className="mt-6 space-y-4">
+                  <ul className="mt-[24px] space-y-4">
                     {[
                       "Unlimited links",
                       "Team Collaboration",
                       "API Access",
                       "Priority Support",
                     ].map((item) => (
-                      <li key={item} className="flex items-center gap-3">
+                      <li key={item} className="flex items-center gap-[12px]">
                         <span className="material-symbols-outlined text-primary">
                           check_circle
                         </span>
@@ -148,7 +148,7 @@ export default function PricingPage() {
                   </ul>
                 </div>
 
-                <button className="mt-8 flex h-12 w-full cursor-pointer items-center justify-center rounded-lg bg-emerald-50 px-6 text-base font-bold text-text-light-primary hover:bg-emerald-100 dark:bg-surface-dark dark:text-text-dark-primary dark:hover:bg-border-dark">
+                <button className="mt-[32px] flex h-[48px] w-full cursor-pointer items-center justify-center rounded-[8px] bg-emerald-50 px-[24px] text-[16px] font-bold text-text-light-primary hover:bg-emerald-100 dark:bg-surface-dark dark:text-text-dark-primary dark:hover:bg-border-dark">
                   Contact Sales
                 </button>
               </div>
@@ -157,14 +157,14 @@ export default function PricingPage() {
         </section>
 
         {/* FAQ */}
-        <section className="py-16 sm:py-24 bg-surface-light dark:bg-surface-dark">
-          <div className="container mx-auto px-4">
-            <div className="mx-auto max-w-4xl">
-              <h2 className="text-center text-3xl font-bold tracking-tight text-text-light-primary dark:text-text-dark-primary sm:text-4xl">
+        <section className="py-[64px] sm:py-[96px] bg-surface-light dark:bg-surface-dark">
+          <div className="container mx-auto px-[16px]">
+            <div className="mx-auto max-w-[896px]">
+              <h2 className="text-center text-[30px] font-bold tracking-tight text-text-light-primary dark:text-text-dark-primary sm:text-[36px]">
                 자주 묻는 질문
               </h2>
 
-              <div className="mt-10 space-y-4">
+              <div className="mt-[40px] space-y-4">
                 {[
                   {
                     q: "나중에 요금제를 변경할 수 있나요?",
@@ -185,7 +185,7 @@ export default function PricingPage() {
                 ].map((item) => (
                   <details
                     key={item.q}
-                    className="group rounded-lg bg-background-light p-6 dark:bg-background-dark"
+                    className="group rounded-[8px] bg-background-light p-[24px] dark:bg-background-dark"
                   >
                     <summary className="flex cursor-pointer items-center justify-between font-semibold text-text-light-primary dark:text-text-dark-primary">
                       {item.q}
@@ -194,7 +194,7 @@ export default function PricingPage() {
                       </span>
                     </summary>
 
-                    <p className="mt-4 text-text-light-secondary dark:text-text-dark-secondary">
+                    <p className="mt-[16px] text-text-light-secondary dark:text-text-dark-secondary">
                       {item.a}
                     </p>
                   </details>

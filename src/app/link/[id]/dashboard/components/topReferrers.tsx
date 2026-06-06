@@ -35,12 +35,12 @@ interface TopReferrersProps {
 
 export default function TopReferrers({ referrers = [] }: TopReferrersProps) {
   return (
-    <div className="flex flex-col gap-4 rounded-lg border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-6">
-      <h3 className="text-lg font-semibold leading-normal">Top Referrers</h3>
+    <div className="flex flex-col gap-[16px] rounded-[8px] border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-[24px]">
+      <h3 className="text-[18px] font-semibold leading-normal">Top Referrers</h3>
 
-      <div className="flex flex-col gap-4 pt-2">
+      <div className="flex flex-col gap-[16px] pt-[8px]">
         {referrers.length === 0 ? (
-          <p className="text-center py-4 text-sm text-subtext-light dark:text-subtext-dark">
+          <p className="text-center py-[16px] text-[14px] text-subtext-light dark:text-subtext-dark">
             No referrer data available
           </p>
         ) : (
@@ -52,25 +52,25 @@ export default function TopReferrers({ referrers = [] }: TopReferrersProps) {
             return (
               <div
                 key={referrer.label}
-                className="flex items-center gap-4 group cursor-pointer"
+                className="flex items-center gap-[16px] group cursor-pointer"
               >
                 <span
-                  className={`material-symbols-outlined text-xl ${iconConfig.bgColor} p-1 rounded ${iconConfig.iconColor}`}
+                  className={`material-symbols-outlined text-[20px] ${iconConfig.bgColor} p-[4px] rounded-[4px] ${iconConfig.iconColor}`}
                 >
                   {iconConfig.icon}
                 </span>
                 <div className="flex-1">
-                  <div className="flex justify-between mb-1">
-                    <p className="text-sm font-medium truncate">
+                  <div className="flex justify-between mb-[4px]">
+                    <p className="text-[14px] font-medium truncate">
                       {referrer.label}
                     </p>
-                    <p className="text-sm font-semibold">
+                    <p className="text-[14px] font-semibold">
                       {referrer.count.toLocaleString()}
                     </p>
                   </div>
-                  <div className="bg-background-light dark:bg-background-dark rounded-full h-1.5 w-full">
+                  <div className="bg-background-light dark:bg-background-dark rounded-[9999px] h-[6px] w-full">
                     <div
-                      className="bg-primary h-1.5 rounded-full transition-all duration-500"
+                      className="bg-primary h-[6px] rounded-[9999px] transition-all duration-500"
                       style={{ width: `${referrer.percentage}%` }}
                     ></div>
                   </div>

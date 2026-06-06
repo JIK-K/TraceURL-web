@@ -15,7 +15,7 @@ export default function ProfileLayout({
   const router = useRouter();
 
   const menuClass = (active: boolean) =>
-    `flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer
+    `flex items-center gap-[12px] px-[12px] py-[8px] rounded-[8px] cursor-pointer
      ${
        active
          ? "bg-green-100 dark:bg-green-500/20 text-[#16a34a]"
@@ -24,19 +24,19 @@ export default function ProfileLayout({
 
   return (
     <div className="min-h-screen bg-[#f5f6f8] dark:bg-[#101622]">
-      <main className="container mx-auto px-4 py-10">
-        <div className="flex gap-10">
+      <main className="container mx-auto px-[16px] py-[40px]">
+        <div className="flex flex-col md:flex-row gap-[24px] md:gap-[40px]">
           {/* Sidebar */}
-          <aside className="w-64 shrink-0">
-            <div className="flex items-center gap-3">
+          <aside className="w-full md:w-[256px] shrink-0">
+            <div className="flex items-center gap-[12px]">
               <Image src="/default.png" alt="icon" width={50} height={50} />
               <div>
                 <p className="font-medium">{user?.displayName}</p>
-                <p className="text-sm text-gray-500">{user?.email}</p>
+                <p className="text-[14px] text-gray-500">{user?.email}</p>
               </div>
             </div>
 
-            <nav className="mt-6 flex flex-col gap-1">
+            <nav className="mt-[24px] flex flex-col gap-[4px]">
               <div
                 className={menuClass(pathname === "/profile")}
                 onClick={() => router.push("/profile")}
@@ -68,7 +68,7 @@ export default function ProfileLayout({
                   useUserStore.persist?.clearStorage?.();
                   router.replace("/login");
                 }}
-                className="flex items-center gap-3 px-3 py-2 text-red-500 cursor-pointer"
+                className="flex items-center gap-[12px] px-[12px] py-[8px] text-red-500 cursor-pointer"
               >
                 <span className="material-symbols-outlined">logout</span>
                 Logout
@@ -77,7 +77,7 @@ export default function ProfileLayout({
           </aside>
 
           {/* Content */}
-          <section className="flex-1 min-w-0">{children}</section>
+          <section className="flex-1 min-w-[0px]">{children}</section>
         </div>
       </main>
     </div>

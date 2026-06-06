@@ -37,14 +37,14 @@ export default function Pagination({
 
   return (
     <div className="flex items-center justify-center">
-      <nav className="flex items-center gap-1">
+      <nav className="flex items-center gap-[4px]">
         {/* 이전 버튼 */}
         <button
-          className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50"
+          className="flex h-[36px] w-[36px] items-center justify-center rounded-[8px] text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50"
           onClick={() => handleClick(currentPage - 1)}
           disabled={currentPage === 1}
         >
-          <span className="material-symbols-outlined text-xl">
+          <span className="material-symbols-outlined text-[20px]">
             chevron_left
           </span>
         </button>
@@ -54,7 +54,7 @@ export default function Pagination({
           page === "..." ? (
             <span
               key={idx}
-              className="flex h-9 w-9 items-center justify-center text-gray-500"
+              className="flex h-[36px] w-[36px] items-center justify-center text-gray-500"
             >
               ...
             </span>
@@ -62,7 +62,7 @@ export default function Pagination({
             <button
               key={idx}
               className={classNames(
-                "flex h-9 w-9 items-center justify-center rounded-lg text-sm font-bold",
+                "flex h-[36px] w-[36px] items-center justify-center rounded-[8px] text-[14px] font-bold",
                 page === currentPage
                   ? "bg-primary text-white"
                   : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -76,11 +76,11 @@ export default function Pagination({
 
         {/* 다음 버튼 */}
         <button
-          className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50"
+          className="flex h-[36px] w-[36px] items-center justify-center rounded-[8px] text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50"
           onClick={() => handleClick(currentPage + 1)}
           disabled={currentPage === totalPages}
         >
-          <span className="material-symbols-outlined text-xl">
+          <span className="material-symbols-outlined text-[20px]">
             chevron_right
           </span>
         </button>
