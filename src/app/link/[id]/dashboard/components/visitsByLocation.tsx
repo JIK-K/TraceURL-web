@@ -41,8 +41,7 @@ export default function VisitsByLocation({
               className="flex items-center justify-between p-[8px] rounded-[4px] bg-background-light dark:bg-background-dark"
             >
               <div className="flex items-center gap-[8px]">
-                {/* ✅ 이미지 src 오류 방지: flagUrl이 있을 때만 렌더링 */}
-                {location.flagUrl ? (
+                {location.flagUrl && ((location.countryName !== "LOCAL") && (location.countryName !== "UNKNOWN")) ? (
                   <img
                     alt={`${location.countryName} Flag`}
                     className="w-[20px] rounded-[4px] shadow-sm"

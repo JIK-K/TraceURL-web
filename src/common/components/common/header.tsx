@@ -19,6 +19,7 @@ const Header = () => {
         })
         .catch(console.error);
     }
+    console.log(user);
   }, []);
 
   return (

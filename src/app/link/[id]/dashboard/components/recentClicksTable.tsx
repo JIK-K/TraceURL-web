@@ -49,11 +49,14 @@ export default function RecentClicksTable(props: RecentClicksTableProps) {
                 <td className="py-[12px] px-[16px] font-mono text-[12px]">{click.ip}</td>
                 <td className="py-[12px] px-[16px]">
                   <div className="flex items-center gap-[8px]">
-                    <img
-                      alt={click.locationCode}
-                      className="w-[16px] rounded-[2px]"
-                      src={click.flagImage}
-                    />
+                    {
+                      click.locationCode === "local" ? "" : 
+                      <img
+                        alt={click.locationCode}
+                        className="w-[16px] rounded-[2px]"
+                        src={click.flagImage}
+                      />
+                    }
                     {click.location}
                   </div>
                 </td>

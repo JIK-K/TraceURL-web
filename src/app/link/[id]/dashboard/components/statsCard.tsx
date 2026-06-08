@@ -92,7 +92,7 @@ export default function StatsCards(props: StatsCardsProps) {
           </p>
         </div>
         <div className="flex items-center gap-[12px] mt-[4px]">
-          {summary?.topCountry.flagImage && (
+          {(summary?.topCountry.flagImage && (summary.topCountry.name !== 'LOCAL')) && (
             <img
               alt={`${summary?.topCountry.name} Flag`}
               className="rounded-[4px] w-[32px] h-auto shadow-sm"
