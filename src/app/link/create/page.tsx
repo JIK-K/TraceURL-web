@@ -131,7 +131,6 @@ export default function CreateLinkPage() {
                   className="h-[48px] rounded-[8px] border border-border-light px-[16px] bg-background-light"
                 >
                   <option>traceurl.p-e.kr</option>
-                  <option>localhost:8080</option>
                 </select>
                 <div className="flex items-center space-x-4">
                   <label className="flex items-center space-x-2 cursor-pointer">
